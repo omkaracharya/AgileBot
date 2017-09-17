@@ -1,5 +1,5 @@
 # CSC 510 - Software Engineering
-# Project Title: XXXXX
+# Project Title: AgileBot
 
 ## Team Members:
 * Amit Watve (awatve)
@@ -7,4 +7,4 @@
 * Jalandhar Singh (jsingh8)
 * Omkar Acharya (oachary)
 
-## Design Milestone: [here](/Design.md)
+## Design Milestone: [here](/Design/Design.md)
