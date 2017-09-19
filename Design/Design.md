@@ -53,6 +53,7 @@ AgileBot's mission is to automate these repetitive tasks to a degree that will s
     [S4] Post the link
     
 **4. Alternative Flows**
+
     [E1] No team members are available.
 
 
@@ -72,7 +73,9 @@ AgileBot's mission is to automate these repetitive tasks to a degree that will s
     [S2] Provide possible meeting times    
     [S3] Create a meeting    
     [S4] Post the link
+    
 **4. Alternative Flows**
+
     [E1] No team members are available.
 
 
@@ -97,6 +100,7 @@ AgileBot's mission is to automate these repetitive tasks to a degree that will s
 **4. Alternative Flows**
 
     [E1] No team members are available.
+    
 
 ## 4. Design Sketches
 
