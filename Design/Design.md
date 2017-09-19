@@ -46,11 +46,12 @@ AgileBot's mission is to automate these repetitive tasks to a degree that will s
     The team lead will request for a `sprint plan` and provide a list of team members and stories [S1]. The bot will provide possible story assignments and team lead confirms [S2]. Bot creates sprint plan [S3] and posts link [S4].
 
 **3. Subflows**
-    [S1] Provide the list of team members and stories  
-    [S2] Provide possible story assignments  
-    [S3] Create a sprint plan
-    [S4] Post the link  
 
+    [S1] Provide the list of team members and stories    
+    [S2] Provide possible story assignments    
+    [S3] Create a sprint plan    
+    [S4] Post the link
+    
 **4. Alternative Flows**
     [E1] No team members are available.
 
@@ -66,11 +67,11 @@ AgileBot's mission is to automate these repetitive tasks to a degree that will s
    The user will request for a `status update` and provide the standup/team id [S1]. The bot will provide possible status updates based on commit logs and the user confirms [S2]. Bot posts user's status update to standup/team channel [S3].
 
 **3. Subflows**
-    [S1] Provide list of attendees  
-    [S2] Provide possible meeting times  
-    [S3] Create a meeting
-    [S4] Post the link  
 
+    [S1] Provide list of attendees    
+    [S2] Provide possible meeting times    
+    [S3] Create a meeting    
+    [S4] Post the link
 **4. Alternative Flows**
     [E1] No team members are available.
 
@@ -86,13 +87,15 @@ AgileBot's mission is to automate these repetitive tasks to a degree that will s
     The scrum master will request `backlog grooming` and provide a list of team members, stories, and bugs [S1]. The bot will provide possible `point allocation` and scrum master confirms [S2]. Bot assigns the points [S3], creates the sprint plan [S4] and posts the link [S5].
 
 **3. Subflows**
-    [S1] Provide list of team members, stories, and bugs  
-    [S2] Provide possible `point allocation`  
-    [S3] Assign the points
-    [S4] Create the sprint plan
+
+    [S1] Provide list of team members, stories, and bugs    
+    [S2] Provide possible `point allocation`      
+    [S3] Assign the points    
+    [S4] Create the sprint plan    
     [S5] Post the link  
 
 **4. Alternative Flows**
+
     [E1] No team members are available.
 
 ## 4. Design Sketches
