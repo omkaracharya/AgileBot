@@ -127,16 +127,18 @@ AgileBot's mission is to automate these repetitive tasks to a degree that will h
 A high level architecture of AgileBot looks like this:
 ![](https://github.ncsu.edu/oachary/CSC-510-Project/blob/master/Design/Images/Architecture.png)
 
-<!--- Description:
-    
+<!--- Description:    
 -->
+
+
+<!--
 * Components
     * Event Listener (Slack)
     * Bot Reactor Engine
     * REST Interactor
         * GitHub
         * Taiga
-
+-->
 ### Architecture components
 <!-- Describe the architecture components in text. -->
 
@@ -146,6 +148,15 @@ AgileBot will interacts with three third party components
 * Slack
 
 For communication with these third party services, AgileBot needs to have the knowledge of authentication tokens generated for each system.
+
+**AgileBot** has four major components
+
+* TAIGA Event Handler
+* GITHUB Event Handler
+* SLACK Event Handler
+* Bot Reactor Engine
+
+The Event handlers would be registered with the Bot Reactor Engine during startup. When user sends a text message in a Slack channel that has AgileBot as a member, AgileBot would raise events based on that text. Respective event handler would be invoked and depending upon the context, AgileBot would act and talk to the components like Taiga, Git or Slack over REST interface.
 
 ### Per Component Description.
 
@@ -168,14 +179,12 @@ For communication with these third party services, AgileBot needs to have the kn
 
 * **[Slack](https://slack.com/)** is a cloud-based set of team collaboration tools and services widely used in especially software industry. AgileBot leverages ubiquity and popularity of Slack APIs to act as a trigger for automating the Agile processes.
 
-**AgileBot** has majorly four components
+* **Bot Reactor Engine** is the core logic component that:
+    1. Decides story points based on the severity/priority of the bugs/features related to it
+    2. Assigns stories to users based on their previous story completion stats and level of expertise
+    3. Submits statuses by looking at the user's git commits
+    4. Plans sprints by matching story points with available user quota. 
 
-* TAIGA Event Handler
-* GIT Event Handler
-* SLACK Event Handler
-* Bot Reactor Engine
-
-The Event handlers would be registered with the Bot Reactor Engine during startup. When user sends a text message in a Slack channel that has AgileBot as a member, AgileBot would raise events based on that text. Respective event handler would be invoked and depending upon the context, AgileBot would act and talk to the components like Taiga, Git or Slack over REST interface.
 
 <!--
 List of REST API's required by event handler.
@@ -192,7 +201,12 @@ List of REST API's required by event handler.
 
 ### Constraints/Guidelines
 <!-- Describe any constraints or guidelines that should be established in building software for your architecture (e.g., a bot cannot send data from one user to another user). -->
-Only Scrum master can call `PlanSprint`
+* Only a Team Leader can call `PlanSprint`
+* Only a Scrum Master can call `GroomBacklog`
+* Only a Team Lead or a Scrum Master can call `GetTeamStatus`
+* Anyone can call `SubmitMystatus`
 
 ### Additional Design Patterns
 <!-- Describe any additional design patterns that may be relevant for your bot design. -->
+
+* We believe that AgileBot's design closely resembles `Explicit Event Systems` pattern in which users like Scrum Master, Team Leader or Engineer(user) explicitly generate events e.g. `GiveMyStatus` acting as a `Publishers` whereas AgileBot acts as a `Subscriber` of these events and `reacts` by taking appropriate actions guided by the core logic engine.
