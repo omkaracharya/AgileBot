@@ -12,16 +12,18 @@ A huge chunk of time is spent every day in menial agile processes. For instance,
 
 ## 2. Bot Description
 <!--What does your bot do? -->
-AgileBot is a [SlackBot](https://get.slack.help/hc/en-us/articles/202026038) that interfaces with Project planning tool (JIRA, Tiaga). When called for its services, it looks up for unassigned bugs and user stories. It minimizes the agile overhead by estimating time frame and assigning user stories to the 'best' engineer after taking into consideration various heuristics
+AgileBot is a [SlackBot](https://get.slack.help/hc/en-us/articles/202026038) that interfaces with a Project planning tool (JIRA, Tiaga). When called for its services, AgileBot looks up for unassigned bugs and user stories, estimates their time frame and assigns the user stories to the 'best' engineer after taking into consideration various heuristics
 
 <!--Why is a bot a good solution for the problem? -->
-AgileBot's mission is to automate these repetitive tasks to a degree that will speed up the overall processes. With AgileBot, a significant amount of time can be saved.
+AgileBot's mission is to automate these repetitive tasks to a degree that will help engineers stay in flow by reducing distractions, eliminating context switches and thus increasing productivity
 
 <!-- Does your bot have a conversation with users (e.g. hubot), or does it just response to events (e.g., coveralls bot on GitHub)? -->
 
-* @AgileBot can be added to the team's Slack Room. From sprint planning, a Scrum master can invoke AgileBot by mentioning it to `PlanSprint`.
-* Engineers working as a part of the sprint can submit their standup contents by mentioning AgileBot with text `GiveMyStatus`.
-* Scrum Master can view her entire team's status by calling `GetTeamStatus`
+* @AgileBot can be added to the team's Slack Room.
+* For backlog grooming, the Scrum master can mention @AgileBot with text `GroomBacklog` to automatically assign points to the backlog stories
+* For sprint planning, a Team Leader can invoke AgileBot by mentioning it to `PlanSprint`.
+* Engineers working as a part of the sprint can submit their everyday statuses by mentioning AgileBot with text `GiveMyStatus`.
+* Scrum Master/Team Leader can view her entire team's status by calling `GetTeamStatus`
 
 <!-- Does your bot fit in one of the categories we talked about in class? A code drone vs documentation bot? -->
 > We think that our bot fits into **Space Reactor category**.
@@ -39,7 +41,7 @@ AgileBot's mission is to automate these repetitive tasks to a degree that will s
 **1. Preconditions**  
 * Agile platform with APIs available for automation.
 * Stories with points assigned.
-* Users with available quotas.
+* Engineers/Users with available quotas.
 * Teams with user information and roles.
   
 **2. Main Flow**
@@ -47,9 +49,9 @@ AgileBot's mission is to automate these repetitive tasks to a degree that will s
 
 **3. Subflows**
 
-    [S1] Provide the list of team members and stories    
-    [S2] Provide possible story assignments    
-    [S3] Create a sprint plan    
+    [S1] Provide the list of team members, their quota and stories
+    [S2] Provide possible story assignments
+    [S3] Create a sprint plan  
     [S4] Post the link
     
 **4. Alternative Flows**
@@ -60,19 +62,19 @@ AgileBot's mission is to automate these repetitive tasks to a degree that will s
 ### Use case 2: Status Updating
 
 **1. Preconditions**
-* User must have commits with the description in the system.
+* Engineers must have commits with the description in the system.
 * Bot should have read access to user commits.
 * Teams with user information and roles.  
 
 **2. Main Flow**
-   The user will request for a `status update` and provide the standup/team id [S1]. The bot will provide possible status updates based on commit logs and the user confirms [S2]. Bot posts user's status update to standup/team channel [S3].
-
+   The user will request for a `status update` and provide the standup/team id [S1]. The bot will provide possible status updates based on commit logs and the user confirms [S2]. Bot posts user's status update to standup/team channel [S3]
+      
+      
 **3. Subflows**
 
-    [S1] Provide list of attendees    
-    [S2] Provide possible meeting times    
-    [S3] Create a meeting    
-    [S4] Post the link
+    [S1] Provide list of dates    
+    [S2] Verify the git commits returned by AgileBot    
+    [S3] Post the link
     
 **4. Alternative Flows**
 
@@ -83,7 +85,7 @@ AgileBot's mission is to automate these repetitive tasks to a degree that will s
 
 **1. Preconditions**
 * Stories and bugs with assigned priorities.
-* Users with available quotas.
+* Engineers with available quotas.
 * Teams with user information and roles.
 
 **2. Main Flow**
@@ -103,22 +105,88 @@ AgileBot's mission is to automate these repetitive tasks to a degree that will s
     
 
 ## 4. Design Sketches
+![](https://)
 
 ### Wireframe
 <!-- Create a wireframe mockup of your bot in action. -->
+![wireframe 1](https://github.ncsu.edu/oachary/CSC-510-Project/blob/master/Design/Images/Wireframe%201%20.PNG)
+![Wireframe 2](https://github.ncsu.edu/oachary/CSC-510-Project/blob/master/Design/Images/Wireframe%202.PNG)
 
 ### Storyboard
 <!-- Create a storyboard that illustrates the primary task that a user undergoes with bot. -->
+![](https://github.ncsu.edu/oachary/CSC-510-Project/blob/master/Design/Images/Storyboard.PNG)
 
 ## 5. Architecture Design + Additional Patterns
 
 <!-- This section should be several diagrams + paragraphs of text. This is the opportunity to really think through how you might build your system. Consider all the criteria listed here in your description. Generic architectures that do not properly reflect a solution will receive low scores. -->
 
+A high level architecture of AgileBot looks like this:
+![](https://github.ncsu.edu/oachary/CSC-510-Project/blob/master/Design/Images/Architecture.png)
+    
+    
+- Description:
+    - 
+
 ### Architectural Diagram
 <!-- Create a diagram that illustrates the components of your bot, the platform it is embedded in, third-party services it may use, data storage it may require, etc. -->
 
+* Components
+    * Event Listener (Slack)
+    * Bot Reactor Engine
+    * REST Interactor
+        * GitHub
+        * Taiga
+
 ### Architecture components
 <!-- Describe the architecture components in text. -->
+
+AgileBot will interacts with three components 
+* TAIGA
+* GIT
+* SLACK
+
+To communicate, AgileBot would need authentication. so, admin need to provide authentication token for each component to the AgileBot. 
+
+Below, we will talk about each component in detail.
+
+**Taiga** is a free open source project management platform for agile developers & designers and project managers who want a beautiful tool that makes work truly enjoyable. As part of this project, Agilebot will requires the following functionalities from taiga  
+* Manage User stories 
+    * Create/Modify/Delete Story.
+    * List of Stories in total or per user.
+    
+* Points 
+    * Create/Modify/Delete Point. 
+    * List of Points in total or per user.
+
+* Tasks
+    * Create/Modify/Delete task.
+    * List of Tasks in total or per user. 
+    
+To achieve this functionality, AgileBot will send the REST request to the Taiga. For ex: there is a un-assigned bug/task. AgileBot will get the task stats for each user, plus some extra info from Taiga. later on, it will find the work load of each user. then, it will assign the bug based on the work load. 
+    
+**Git** (/ɡɪt/) is a version control system for tracking changes in computer files and coordinating work on those files among multiple people. AgileBot will request for the data like checkin comments, number of lines of checked-in code etc from git using REST API's. This data will be used to provide the status/update of a feature or team member to the manager
+
+**AgileBot** has majorly four components
+
+* TAIGA Event Handler
+* GIT Event Handler
+* SLACK Event Handler
+* Core Engine
+
+The Event handlers will get registered with the core engine during startup of bot. When user sends text message in the slack, core engine will process the text and will raise the event based on the text. Then the respective event handler will get called. The event handler talks to the components like Taiga, Git or Slack over REST interface. 
+
+<!--
+List of REST API's required by event handler.
+
+*  User Stories
+
+|         URL                        | Method |   Functionality    |
+| -----------------------------------|--------| ------------------ |
+| /api/v1/userstories                |  GET   | List user stories  |
+| /api/v1/userstories                |  POST  | Create user story  |
+| /api/v1/userstories/{userStoryId}  |  GET   | Get user story     |
+| /api/v1/userstories/{userStoryId}  |  PUT   | Modify user story  |
+-->
 
 ### Constraints/Guidelines
 <!-- Describe any constraints or guidelines that should be established in building software for your architecture (e.g., a bot cannot send data from one user to another user). -->
