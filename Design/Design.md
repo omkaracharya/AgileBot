@@ -12,7 +12,7 @@ A huge chunk of time is spent every day in menial agile processes. For instance,
 
 ## 2. Bot Description
 <!--What does your bot do? -->
-AgileBot is a [SlackBot](https://get.slack.help/hc/en-us/articles/202026038) that interfaces with a Project planning tool (JIRA, Tiaga). When called for its services, AgileBot looks up for unassigned bugs and user stories, estimates their time frame and assigns the user stories to the 'best' engineer after taking into consideration various heuristics
+AgileBot is a [SlackBot](https://get.slack.help/hc/en-us/articles/202026038) that interfaces with Project planning tool [Tiaga](https://taiga.io/). When called for its services, AgileBot looks up for unassigned bugs and user stories, estimates their time frame and assigns the user stories to the 'best' engineer after taking into consideration various heuristics
 
 <!--Why is a bot a good solution for the problem? -->
 AgileBot's mission is to automate these repetitive tasks to a degree that will help engineers stay in flow by reducing distractions, eliminating context switches and thus increasing productivity
@@ -105,7 +105,7 @@ AgileBot's mission is to automate these repetitive tasks to a degree that will h
     
 
 ## 4. Design Sketches
-![](https://)
+<!--![](https://) -->
 
 ### Wireframe
 <!-- Create a wireframe mockup of your bot in action. -->
@@ -120,16 +120,16 @@ AgileBot's mission is to automate these repetitive tasks to a degree that will h
 
 <!-- This section should be several diagrams + paragraphs of text. This is the opportunity to really think through how you might build your system. Consider all the criteria listed here in your description. Generic architectures that do not properly reflect a solution will receive low scores. -->
 
-A high level architecture of AgileBot looks like this:
-![](https://github.ncsu.edu/oachary/CSC-510-Project/blob/master/Design/Images/Architecture.png)
     
-    
-- Description:
-    - 
-
 ### Architectural Diagram
 <!-- Create a diagram that illustrates the components of your bot, the platform it is embedded in, third-party services it may use, data storage it may require, etc. -->
 
+A high level architecture of AgileBot looks like this:
+![](https://github.ncsu.edu/oachary/CSC-510-Project/blob/master/Design/Images/Architecture.png)
+
+<!--- Description:
+    
+-->
 * Components
     * Event Listener (Slack)
     * Bot Reactor Engine
@@ -140,40 +140,42 @@ A high level architecture of AgileBot looks like this:
 ### Architecture components
 <!-- Describe the architecture components in text. -->
 
-AgileBot will interacts with three components 
-* TAIGA
-* GIT
-* SLACK
+AgileBot will interacts with three third party components 
+* Taiga
+* GitHub
+* Slack
 
-To communicate, AgileBot would need authentication. so, admin need to provide authentication token for each component to the AgileBot. 
+For communication with these third party services, AgileBot needs to have the knowledge of authentication tokens generated for each system.
 
-Below, we will talk about each component in detail.
+### Per Component Description.
 
-**Taiga** is a free open source project management platform for agile developers & designers and project managers who want a beautiful tool that makes work truly enjoyable. As part of this project, Agilebot will requires the following functionalities from taiga  
-* Manage User stories 
-    * Create/Modify/Delete Story.
-    * List of Stories in total or per user.
+* **[Tiaga](https://taiga.io/)** is a free open source project management platform for agile developers & designers and project managers who want a beautiful tool that makes work truly enjoyable. As part of this project, Agilebot will requires the following functionalities from taiga
+    * Manage User stories 
+        * Create/Modify/Delete Story.
+        * List of Stories in total or per user.
+
+    * Points
+        * Create/Modify/Delete Point. 
+        * List of Points in total or per user.
+
+    * Tasks
+        * Create/Modify/Delete task.
+        * List of Tasks in total or per user. 
     
-* Points 
-    * Create/Modify/Delete Point. 
-    * List of Points in total or per user.
+    To achieve this functionality, AgileBot will send the REST request to the Taiga. For instance: There is an un-assigned bug/story. AgileBot will get the task stats for each user, plus some extra information from Taiga. It can then find the work load of each user and accordingly assign the story to the user.
 
-* Tasks
-    * Create/Modify/Delete task.
-    * List of Tasks in total or per user. 
-    
-To achieve this functionality, AgileBot will send the REST request to the Taiga. For ex: there is a un-assigned bug/task. AgileBot will get the task stats for each user, plus some extra info from Taiga. later on, it will find the work load of each user. then, it will assign the bug based on the work load. 
-    
-**Git** (/ɡɪt/) is a version control system for tracking changes in computer files and coordinating work on those files among multiple people. AgileBot will request for the data like checkin comments, number of lines of checked-in code etc from git using REST API's. This data will be used to provide the status/update of a feature or team member to the manager
+* **[Git](https://git-scm.com/)** (/ɡɪt/) is a version control system for tracking changes in computer files and **[GitHub](https://github.com/)** is a hosting service for Git repositories to coordinate work on those files among multiple people. AgileBot would request GitHub for data like check-in comments, review comments, CD/CI stats, if available using REST APIs. This data will be used to provide the status updates of a feature or team member to Team leader or Scrum master
+
+* **[Slack](https://slack.com/)** is a cloud-based set of team collaboration tools and services widely used in especially software industry. AgileBot leverages ubiquity and popularity of Slack APIs to act as a trigger for automating the Agile processes.
 
 **AgileBot** has majorly four components
 
 * TAIGA Event Handler
 * GIT Event Handler
 * SLACK Event Handler
-* Core Engine
+* Bot Reactor Engine
 
-The Event handlers will get registered with the core engine during startup of bot. When user sends text message in the slack, core engine will process the text and will raise the event based on the text. Then the respective event handler will get called. The event handler talks to the components like Taiga, Git or Slack over REST interface. 
+The Event handlers would be registered with the Bot Reactor Engine during startup. When user sends a text message in a Slack channel that has AgileBot as a member, AgileBot would raise events based on that text. Respective event handler would be invoked and depending upon the context, AgileBot would act and talk to the components like Taiga, Git or Slack over REST interface.
 
 <!--
 List of REST API's required by event handler.
