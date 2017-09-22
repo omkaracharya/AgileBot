@@ -109,7 +109,11 @@ AgileBot's mission is to automate these repetitive tasks to a degree that will h
 
 ### Wireframe
 <!-- Create a wireframe mockup of your bot in action. -->
+#### Wireframe 1: Team Lead initiated sprint planning using AgileBot
 ![wireframe 1](https://github.ncsu.edu/oachary/CSC-510-Project/blob/master/Design/Images/Wireframe%201%20.PNG)
+
+
+#### Wireframe 2: An engineer reporting his daily status using AgileBot
 ![Wireframe 2](https://github.ncsu.edu/oachary/CSC-510-Project/blob/master/Design/Images/Wireframe%202.PNG)
 
 ### Storyboard
