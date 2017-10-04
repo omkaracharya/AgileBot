@@ -68,13 +68,14 @@ AgileBot's mission is to automate these repetitive tasks to a degree that will h
 * Teams with user information and roles.  
 
 **2. Main Flow**
-   The user will request for a *status update* and provide the standup/team id `[S1]`. The bot will provide possible status updates based on commit logs and the user confirms `[S2]`. Bot posts user's status update to standup/team channel `[S3]`.
+   The user will request for a *status update* and provide the standup/team id/date `[S1]`. The bot will provide possible status updates based on commit logs `[S2]`. The user updated and/or confirms `[S2]`. Bot posts user's status update to standup/team channel `[S3]`.
       
       
 **3. Subflows**
 
     [S1] Provide list of dates.
     [S2] Verify the git commits returned by AgileBot.
+    [S3] Update the interactive message if needed
     [S3] Post the link.
     
 **4. Alternative Flows**
@@ -87,25 +88,28 @@ AgileBot's mission is to automate these repetitive tasks to a degree that will h
 ### Use case 3: Backlog Grooming
 
 **1. Preconditions**
-* Pending stories and bugs with priorities.
+* Agile platform with APIs available for automation.
+* Pending stories with unassigned points 
+* Related bugs with priorities.
 * Engineers with available quotas.
 * Teams with user information and roles.
 
 **2. Main Flow**
-    The scrum master will request for *backlog grooming* and provide a list of team members, stories, and bugs `[S1]`. The bot will provide possible *point allocation* and scrum master confirms `[S2]`. Bot assigns the points `[S3]`, creates the sprint plan `[S4]`, and posts the link `[S5]`.
+    The scrum master will request for *backlog grooming* `[S1]`. The bot will provide possible *point allocation* `[S2]` and scrum master confirms `[S3]`. Bot assigns the points `[S4]` and posts the link `[S5]`.
 
 **3. Subflows**
 
     [S1] Provide list of team members, stories, and bugs.
-    [S2] Provide possible point allocation.
-    [S3] Assign the points.
-    [S4] Create the sprint plan.
-    [S5] Post the link.
+    [S2] Receives interactive message text only posssible point allocation
+    [S3] Interactive message with action buttons
+    [S4] Assign the points considering related bug priority and severity.
+    [S5] Agile Platform Link to newly view the groomed stories.
 
 **4. Alternative Flows**
 
     [E1] Team members are unavailable.
     [E2] Stories are unavailable.
+    [E3] Stories are available but are assigned points
     
 
 ## 4. Design Sketches
