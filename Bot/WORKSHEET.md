@@ -7,6 +7,7 @@ Deliverable | Item/Status | Issues/Tasks
 ---|---|---
 Use Case Refinement | [Use Case 3](https://github.ncsu.edu/oachary/CSC-510-Project/blob/master/Design/Design.md#use-case-3-backlog-grooming) | [#DE3](https://rally1.rallydev.com/#/165079587024ud/detail/defect/165459751216)
 Bot Implementation | Investigate JIRA vs. Taiga vs. Rally | [#US10](https://rally1.rallydev.com/#/165079587024ud/detail/userstory/165465912252)
+Create Mock Data | Mock data for git hub status | [#US16](https://rally1.rallydev.com/#/165079587024d/detail/userstory/166144740648?fdp=true)
 
 <!--
 ## Week 2
