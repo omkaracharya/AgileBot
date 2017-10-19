@@ -7,7 +7,7 @@ Deliverable | Item/Status | Issues/Tasks
 ---|---|---
 Use Case Refinement | [Use Case 3](https://github.ncsu.edu/oachary/CSC-510-Project/blob/master/Design/Design.md#use-case-3-backlog-grooming) | [#DE3](https://rally1.rallydev.com/#/165079587024ud/detail/defect/165459751216)
 Bot Implementation | Investigate JIRA vs. Taiga vs. Rally | [#US10](https://rally1.rallydev.com/#/165079587024ud/detail/userstory/165465912252)
-Create Mock Data | Mock data for git hub status | [#US16](https://rally1.rallydev.com/#/165079587024d/detail/userstory/166144740648?fdp=true)
+Create Mock Data | Mock data for git hub status | [#US16](https://rally1.rallydev.com/#/165079587024d/detail/userstory/166144740648)
 
 <!--
 ## Week 2
@@ -20,5 +20,5 @@ Deliverable | Item/Status | Issues/Tasks
 ## Week 2
 Deliverable | Item/Status | Issues/Tasks
 ---|---|---
-Bot Implementation | Platform Integration | [#TA11](https://rally1.rallydev.com/#/165079587024ud/detail/task/166073229848), [#TA12](https://rally1.rallydev.com/#/165079587024ud/detail/task/166073250164)
+Bot Implementation | Platform Integration | [#TA11](https://rally1.rallydev.com/#/165079587024ud/detail/task/166073229848), [#TA12](https://rally1.rallydev.com/#/165079587024ud/detail/task/166073250164), [#TA14](https://rally1.rallydev.com/#/165079587024ud/detail/task/166235301688), [#DE7](https://rally1.rallydev.com/#/165079587024ud/detail/defect/166235297872), [#DE8](https://rally1.rallydev.com/#/165079587024ud/detail/defect/166235300396)
 Bot Implementation | Bot Integration | [#TA13](https://rally1.rallydev.com/#/165079587024ud/detail/task/166076311164)
