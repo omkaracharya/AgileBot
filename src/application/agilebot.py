@@ -1,7 +1,7 @@
 import os
 import time
 import datetime
-from bot import Bot
+from data.bot import Bot
 from slackclient import SlackClient
 
 READ_WEBSOCKET_DELAY = 1
@@ -42,8 +42,9 @@ def prepare_response(channel, user, message):
                 start_date = datetime.datetime.strptime(start_date, "%m/%d/%Y")
                 end_date = datetime.datetime.strptime(end_date, "%m/%d/%Y")
 
-                # TODO - Check for end_date >= start_date
-                #
+                if start_date > end_date:
+                    response = "Start date should be before end date."
+                    return response
 
                 response = "*Tentative Sprint Plan for *`" + datetime.datetime.strftime(start_date, "%m/%d/%Y") \
                            + "` *to* `" + datetime.datetime.strftime(end_date, "%m/%d/%Y") + "`"
@@ -92,7 +93,7 @@ def prepare_response(channel, user, message):
 
             # TODO - Groom Backlog
             # response += groom_backlog()
-            response += "```1. Story #1: Points 5\n2.Story #2. Points 10```"
+            response += "```1. Story #1: Points 5\n2. Story #2. Points 10```"
 
     else:
         # Invalid command
