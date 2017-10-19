@@ -14,7 +14,7 @@ def prepare_response(channel, user, message):
     :param channel: string containing channel in which the message is sent/to be sent
     :param user: string containing user id who sent the messsage
     :param message: string containing Slack message
-    :return: -
+    :return: response
     """
 
     response = ""
@@ -107,7 +107,7 @@ def get_messages(slack_rtm_output, bot_address):
     This function parses the Stack message
     :param slack_rtm_output: Slack message object
     :param bot_address: string containing how the bot is addressed e.g. <@BOT_ID>
-    :return: command, channel
+    :return: command, user, message
     """
 
     messages = slack_rtm_output
@@ -127,7 +127,7 @@ def get_messages(slack_rtm_output, bot_address):
 def get_bot_credentials():
     """
     This function gets the environmental variables set for the bot details
-    :return:
+    :return: bot_id, bot_token
     """
     bot_id = os.environ.get("AGILEBOT_ID")
     bot_token = os.environ.get("AGILEBOT_TOKEN")
