@@ -8,3 +8,5 @@
 * Omkar Acharya (oachary)
 
 ## Design Milestone: [here](/Design/Design.md)
+## Bot Milestone: [here](/Bot/BOT.md)
+## Task Tracking: [Worksheet](/Bot/WORKSHEET.md)
