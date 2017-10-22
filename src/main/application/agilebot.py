@@ -1,15 +1,17 @@
 import datetime
 import os
 import time
+from main.data.action_builder import get_action, get_usage
+from main.data.validator import is_valid_bot, validate_message
+from main.service.slack import get_connection
 
-from slackclient import SlackClient
-
+import set_env
 from main.data.bot import Bot
 
 READ_WEBSOCKET_DELAY = 1
 
 
-def prepare_response(channel, user, message):
+def prepare_response(command, message):
     """
     This function calls the service logic for the command entered by the user in Slack
     e.g. msg = "givemystatus 01/21/2017
@@ -20,9 +22,6 @@ def prepare_response(channel, user, message):
     """
 
     response = ""
-    # This contains the first word in the message (should be a valid command ideally)
-    original_command = message.split(" ")[0]
-    command = original_command.lower()
 
     if command == "plansprint":
         if len(message.split(" ")) == 1:
@@ -32,7 +31,7 @@ def prepare_response(channel, user, message):
             response = "Please provide the end date."
 
         elif len(message.split(" ")) > 3:
-            response = "Invalid use of *" + original_command + "*. Please check the usage."
+            response = "Invalid use of *" + command + "*. Please check the usage."
 
         else:
             # This contains the date
@@ -48,12 +47,12 @@ def prepare_response(channel, user, message):
                     response = "Start date should be before end date."
                     return response
 
-                response = "*Tentative Sprint Plan for *`" + datetime.datetime.strftime(start_date, "%m/%d/%Y") \
-                           + "` *to* `" + datetime.datetime.strftime(end_date, "%m/%d/%Y") + "`"
+                response = "*Tentative Sprint Plan for *" + datetime.datetime.strftime(start_date, "%m/%d/%Y") \
+                           + " *to* " + datetime.datetime.strftime(end_date, "%m/%d/%Y")
 
                 # TODO - Plan Sprint
                 # response += plan_sprint(start_date, end_date)
-                response += "\n```1. Story #1: @omkar.acharya\n2. Story #2: @yvlele```"
+                response += "\n1. Story #1: @omkar.acharya\n2. Story #2: @yvlele"
 
             except ValueError:
                 # Invalid date
@@ -64,7 +63,7 @@ def prepare_response(channel, user, message):
             response = "Please provide the date."
 
         elif len(message.split(" ")) > 2:
-            response = "Invalid use of *" + original_command + "*. Please check the usage."
+            response = "Invalid use of *" + command + "*. Please check the usage."
 
         else:
             # This contains the date
@@ -80,7 +79,7 @@ def prepare_response(channel, user, message):
 
                 # TODO - User's status update
                 # response += give_user_status(user)
-                response += "\n`Currently you have no commits.`"
+                response += "\nCurrently you have no commits."
 
             except ValueError:
                 # Invalid date
@@ -88,7 +87,7 @@ def prepare_response(channel, user, message):
 
     elif command == "groombacklog":
         if len(message.split(" ")) != 1:
-            response = "Invalid use of *" + original_command + "*. Please check the usage."
+            response = "Invalid use of *" + command + "*. Please check the usage."
 
         else:
             response = "Tentative Backlog Grooming: "
@@ -127,6 +126,28 @@ def get_messages(slack_rtm_output, bot_address):
     return None, None, None
 
 
+def execute_bot(slack_client, agilebot):
+    # Always stay active
+    while True:
+        channel, user, message = get_messages(slack_client.rtm_read(), agilebot.address)
+        if channel and user and message:
+            command, request = validate_message(message)
+            if command:
+                # Response to the user
+                action = get_action(command)
+                # response = action.get_response(request)
+                response = prepare_response(command, message)
+                user_name = "<@" + user + "> "
+                response = user_name + response
+                # TODO - Use interactive Slack message buttons
+                # TODO - Use ephemeral messages depending on the command
+                # slack_client.api_call("chat.postEphemeral", channel=channel, text=response, as_user=True, user="U6WJKJEUD")
+            else:
+                response = get_usage()
+            slack_client.api_call("chat.postMessage", channel=channel, text=response, as_user=True)
+        time.sleep(READ_WEBSOCKET_DELAY)
+
+
 def get_bot_credentials():
     """
     This function gets the environmental variables set for the bot details
@@ -137,46 +158,22 @@ def get_bot_credentials():
     return bot_id, bot_token
 
 
-# Main function
-if __name__ == "__main__":
-    # Initializae the bot
+def main():
+    # Initialize the bot
     bot_id, bot_token = get_bot_credentials()
     bot_name = "agilebot"
 
-    # Invalid bot credentials
-    if not bot_id:
-        print("Set AGILEBOT_ID as an environment variable")
-        exit()
+    if is_valid_bot(bot_id, bot_token):
+        # Create a Bot object
+        agilebot = Bot(bot_id, bot_token, bot_name)
+        slack_client = get_connection(bot_token)
+        if slack_client.rtm_connect():
+            print(agilebot.name + " is active on Slack..")
+            execute_bot(slack_client, agilebot)
+        else:
+            print("Connection failed..")
 
-    if not bot_token:
-        print("Set AGILEBOT_TOKEN as an environment variable")
-        exit()
 
-    # Create a Bot object
-    agilebot = Bot(bot_id, bot_token, bot_name)
-
-    # Create a Stack client
-    slack_client = SlackClient(agilebot.token)
-
-    if slack_client.rtm_connect():
-        print(agilebot.name + " is active on Slack..")
-        # Always stay active
-        while True:
-            channel, user, message = get_messages(slack_client.rtm_read(), agilebot.address)
-            if channel and user and message:
-                # Response to the user
-                response = prepare_response(channel, user, message)
-                # TODO - Look for user_id to user_name dictionary
-                slack_client.api_call("chat.postMessage", channel=channel, text=response, as_user=True)
-
-                # TODO - Use interactive Slack message buttons
-                # TODO - Use ephemeral messages depending on the command
-                # slack_client.api_call("chat.postEphemeral", channel=channel, text=response, as_user=True, user="U6WJKJEUD")
-
-            elif channel and user:
-                response = "*Usage:* `plansprint startdate enddate` or `givemystatus statusdate` or `groombacklog`" \
-                           "\n*Date format:* MM/DD/YYYY"
-                slack_client.api_call("chat.postMessage", channel=channel, text=response, as_user=True)
-            time.sleep(READ_WEBSOCKET_DELAY)
-    else:
-        print("Connection failed..")
+# Main function
+if __name__ == "__main__":
+    main()
