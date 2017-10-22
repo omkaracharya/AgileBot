@@ -6,3 +6,7 @@ variables = dict(line.strip().split('=') for line in open('../../../environment_
 def set_env():
     for k, v in variables.items():
         os.environ.setdefault(k, v)
+
+
+def get_env(variable):
+    return os.environ.get(variable)

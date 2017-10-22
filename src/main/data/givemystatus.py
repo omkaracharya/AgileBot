@@ -16,7 +16,5 @@ class StatusUpdate:
                 self.date = datetime.today()
 
         response = "Here is your status for " + self.date.strftime("%m/%d/%Y")
-        # TODO - User's status update
-        # response += give_user_status(user)
         response += get_commits(user, self.date)
         return response

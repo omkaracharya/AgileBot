@@ -1,4 +1,3 @@
-import datetime
 import os
 import time
 
@@ -9,70 +8,6 @@ from main.data.validator import is_valid_bot, validate_message
 from main.service.slack import get_connection
 
 READ_WEBSOCKET_DELAY = 1
-
-
-def prepare_response(command, message):
-    """
-    This function calls the service logic for the command entered by the user in Slack
-    e.g. msg = "givemystatus 01/21/2017
-    :param message: string containing Slack message
-    :return: response
-    """
-
-    response = ""
-
-    if command == "plansprint":
-        if len(message.split(" ")) == 1:
-            response = "Please provide the start date and the end date."
-
-        elif len(message.split(" ")) == 2:
-            response = "Please provide the end date."
-
-        elif len(message.split(" ")) > 3:
-            response = "Invalid use of *" + command + "*. Please check the usage."
-
-        else:
-            # This contains the date
-            start_date = message.split(" ")[1]
-            end_date = message.split(" ")[2]
-
-            # Check if a valid date is entered
-            try:
-                start_date = datetime.datetime.strptime(start_date, "%m/%d/%Y")
-                end_date = datetime.datetime.strptime(end_date, "%m/%d/%Y")
-
-                if start_date > end_date:
-                    response = "Start date should be before end date."
-                    return response
-
-                response = "*Tentative Sprint Plan for *" + datetime.datetime.strftime(start_date, "%m/%d/%Y") \
-                           + " *to* " + datetime.datetime.strftime(end_date, "%m/%d/%Y")
-
-                # TODO - Plan Sprint
-                # response += plan_sprint(start_date, end_date)
-                response += "\n1. Story #1: @omkar.acharya\n2. Story #2: @yvlele"
-
-            except ValueError:
-                # Invalid date
-                response = "Enter a valid status date!"
-
-    elif command == "groombacklog":
-        if len(message.split(" ")) != 1:
-            response = "Invalid use of *" + command + "*. Please check the usage."
-
-        else:
-            response = "Tentative Backlog Grooming: "
-
-            # TODO - Groom Backlog
-            # response += groom_backlog()
-            response += "```1. Story #1: Points 5\n2. Story #2. Points 10```"
-
-    else:
-        # Invalid command
-        response = "*Usage:* `plansprint startdate enddate` or `givemystatus statusdate` or `groombacklog`" \
-                   "\n*Date format:* MM/DD/YYYY"
-
-    return response
 
 
 def get_messages(slack_rtm_output, bot_address):
@@ -138,7 +73,7 @@ def run():
         agilebot = Bot(bot_id, bot_token, bot_name)
         slack_client = get_connection(bot_token)
         if slack_client.rtm_connect():
-            print(agilebot.name + " is active on Slack..")
+            print("'" + agilebot.name + "' is active on Slack..")
             execute_bot(slack_client, agilebot)
         else:
             print("Connection failed..")
