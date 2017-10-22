@@ -2,7 +2,7 @@ import datetime
 import os
 import time
 
-from main.data.action_builder import get_action, get_usage
+from main.application.action_builder import get_action, get_usage
 from main.data.bot import Bot
 from main.data.environment import set_env
 from main.data.validator import is_valid_bot, validate_message
@@ -51,33 +51,6 @@ def prepare_response(command, message):
                 # TODO - Plan Sprint
                 # response += plan_sprint(start_date, end_date)
                 response += "\n1. Story #1: @omkar.acharya\n2. Story #2: @yvlele"
-
-            except ValueError:
-                # Invalid date
-                response = "Enter a valid status date!"
-
-    elif command == "givemystatus":
-        if len(message.split(" ")) < 2:
-            response = "Please provide the date."
-
-        elif len(message.split(" ")) > 2:
-            response = "Invalid use of *" + command + "*. Please check the usage."
-
-        else:
-            # This contains the date
-            status_date = message.split(" ")[1]
-            # Check if a valid date is entered
-            try:
-                status_date = datetime.datetime.strptime(status_date, "%m/%d/%Y")
-
-                # TODO - Check if the entered date is from the past (no future dates)
-                #
-
-                response = "Here is your status for " + datetime.datetime.strftime(status_date, "%m/%d/%Y")
-
-                # TODO - User's status update
-                # response += give_user_status(user)
-                response += "\nCurrently you have no commits."
 
             except ValueError:
                 # Invalid date
@@ -133,8 +106,7 @@ def execute_bot(slack_client, agilebot):
             if command:
                 # Response to the user
                 action = get_action(command)
-                # response = action.get_response(request)
-                response = prepare_response(command, message)
+                response = action.get_response(user, request)
                 user_name = "<@" + user + "> "
                 response = user_name + response
                 # TODO - Use interactive Slack message buttons

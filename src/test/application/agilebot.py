@@ -1,8 +1,10 @@
 import os
 import time
+import unittest
 from datetime import datetime
 from threading import Thread
 
+from nose.tools import assert_is_not_none, assert_true
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.action_chains import ActionChains
@@ -14,66 +16,63 @@ from selenium.webdriver.support.ui import WebDriverWait
 from main.application.agilebot import run
 from main.data.environment import set_env
 
-application = None
 driver = None
-try:
-    set_env()
-    application = Thread(target=run)
-    application.daemon = True
-    application.start()
-    TESTER_PASSWORD = os.environ.get("TESTER_PASSWORD")
 
-    TESTER_EMAIL = os.environ.get("TESTER_EMAIL")
 
-    CHROME_DRIVER_PATH = os.environ.get("CHROME_DRIVER_PATH")
-    SLACK_URL = os.environ.get("SLACK_URL")
+class TestStatusUpdate(unittest.TestCase):
+    def setUp(self):
+        set_env()
+        application = Thread(target=run)
+        application.daemon = True
+        application.start()
+        global driver
+        driver = webdriver.Chrome(os.environ.get("CHROME_DRIVER_PATH"))
 
-    driver = webdriver.Chrome(CHROME_DRIVER_PATH)
-    driver.get(SLACK_URL)
-    wait = WebDriverWait(driver, 30)
-    wait.until(EC.presence_of_element_located((By.ID, "signin_btn")))
-    email = driver.find_element_by_id("email")
-    password = driver.find_element_by_id("password")
+    def tearDown(self):
+        driver.quit()
 
-    email.send_keys(TESTER_EMAIL)
-    password.send_keys(TESTER_PASSWORD)
+    def test_no_commits(self):
+        driver.get(os.environ.get("SLACK_URL"))
+        wait = WebDriverWait(driver, 30)
+        wait.until(EC.presence_of_element_located((By.ID, "signin_btn")))
+        email = driver.find_element_by_id("email")
+        password = driver.find_element_by_id("password")
 
-    sign_in = driver.find_element_by_id("signin_btn")
-    sign_in.click()
+        email.send_keys(os.environ.get("TESTER_EMAIL"))
+        password.send_keys(os.environ.get("TESTER_PASSWORD"))
 
-    wait.until(EC.title_contains("general"))
+        sign_in = driver.find_element_by_id("signin_btn")
+        sign_in.click()
 
-    driver.get(SLACK_URL + "messages/agilebot-test")
-    wait.until(EC.title_contains("agilebot-test"))
+        wait.until(EC.title_contains("general"))
 
-    wait.until(EC.presence_of_element_located((By.ID, "msg_input")))
-    message_input = driver.find_element_by_id("msg_input")
-    assert message_input is not None
+        driver.get(os.environ.get("SLACK_URL") + "messages/agilebot-test")
+        wait.until(EC.title_contains("agilebot-test"))
 
-    actions = ActionChains(driver)
-    actions.move_to_element(message_input)
-    actions.click()
-    actions.send_keys("@AgileBot givemystatus " + datetime.today().strftime("%m/%d/%Y"))
-    actions.send_keys(Keys.RETURN)
-    actions.perform()
+        wait.until(EC.presence_of_element_located((By.ID, "msg_input")))
+        message_input = driver.find_element_by_id("msg_input")
+        assert message_input is not None
 
-    time.sleep(5)
+        actions = ActionChains(driver)
+        actions.move_to_element(message_input)
+        actions.click()
+        actions.send_keys("@AgileBot givemystatus " + datetime.today().strftime("%m/%d/%Y"))
+        actions.send_keys(Keys.RETURN)
+        actions.perform()
 
-    tester_request = driver.find_element_by_xpath(
-        '(//div[@class="message_content"]//span[@class="message_body"][starts-with(text()," givemystatus")]/..//div[@class="message_content_header_left"]//a[text()="Tester"])[last()]')
-    assert tester_request is not None
-    next_message_xpath = '../../../../following-sibling::ts-message'
-    message = tester_request
-    while message is not None:
-        try:
-            message = message.find_element_by_xpath(next_message_xpath)
-            print(message.text)
-            if message.text.startswith('AgileBot'):
-                assert ('@Tester Here is your status for ' + datetime.today().strftime("%m/%d/%Y")) in message.text
-                print('Test passed')
-                break
-        except NoSuchElementException:
-            print('Test failed')
-            message = None
-finally:
-    driver.quit()
+        time.sleep(5)
+
+        tester_request = driver.find_element_by_xpath(
+            '(//div[@class="message_content"]//span[@class="message_body"][starts-with(text()," givemystatus")]/..//div[@class="message_content_header_left"]//a[text()="Tester"])[last()]')
+        assert_is_not_none(tester_request)
+        next_message_xpath = '../../../../following-sibling::ts-message'
+        message = tester_request
+        while message is not None:
+            try:
+                message = message.find_element_by_xpath(next_message_xpath)
+                if message.text.startswith('AgileBot'):
+                    assert_true(
+                        ('@Tester Here is your status for ' + datetime.today().strftime("%m/%d/%Y")) in message.text)
+                    break
+            except NoSuchElementException:
+                message = None
