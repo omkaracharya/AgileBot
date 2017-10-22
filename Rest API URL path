@@ -1,0 +1,31 @@
+1. Get the list of Defects 
+   https://rally1.rallydev.com/slm/webservice/v2.0/Defects
+
+2. List of Tasks
+   https://rally1.rallydev.com/slm/webservice/v2.0/tasks
+
+3. List of Projects
+   https://rally1.rallydev.com/slm/webservice/v2.0/Projects
+
+4. List of Stories 
+   https://rally1.rallydev.com/slm/webservice/v2.0/hierarchicalrequirement
+
+   {
+	"HierarchicalRequirement" :
+	 {  "_ref": "https://rally1.rallydev.com/slm/webservice/v2.0/hierarchicalrequirement/166144740648",
+        "ObjectID": 166144740648,
+        .............
+		.............
+		"PlanEstimate": 100
+     }
+  }
+  
+  To assign the points, we need to change the PlanEstimate attribute value. Default value of this attribute is null.
+
+5. Get all the commits for a repo
+
+	https://api.github.com/repos/:username/:repo/commits
+
+	For example : if repo name is Operating-System and username is pidEins
+	then query will be https://api.github.com/repos/pidEins/Operating-System/commits. 
+
