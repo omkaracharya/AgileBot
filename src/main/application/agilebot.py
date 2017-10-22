@@ -1,12 +1,12 @@
 import datetime
 import os
 import time
+
 from main.data.action_builder import get_action, get_usage
+from main.data.bot import Bot
+from main.data.environment import set_env
 from main.data.validator import is_valid_bot, validate_message
 from main.service.slack import get_connection
-
-import set_env
-from main.data.bot import Bot
 
 READ_WEBSOCKET_DELAY = 1
 
@@ -15,8 +15,6 @@ def prepare_response(command, message):
     """
     This function calls the service logic for the command entered by the user in Slack
     e.g. msg = "givemystatus 01/21/2017
-    :param channel: string containing channel in which the message is sent/to be sent
-    :param user: string containing user id who sent the messsage
     :param message: string containing Slack message
     :return: response
     """
@@ -158,7 +156,7 @@ def get_bot_credentials():
     return bot_id, bot_token
 
 
-def main():
+def run():
     # Initialize the bot
     bot_id, bot_token = get_bot_credentials()
     bot_name = "agilebot"
@@ -176,4 +174,6 @@ def main():
 
 # Main function
 if __name__ == "__main__":
-    main()
+    # Initialize environment
+    set_env()
+    run()
