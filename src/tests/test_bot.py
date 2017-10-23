@@ -19,6 +19,7 @@ class User:
         self.UserName = username
         self.Role = role
 
+
 @patch('pyral.Rally')
 def test_rally_get_users(mock_rally):
     user1 = User(1, "klal", "Kishan Lal", "Boss")
@@ -29,5 +30,10 @@ def test_rally_get_users(mock_rally):
 @patch('pyral.Rally')
 def test_rally_get_workspace(mock_rally):
     set_env('../../environment_variables.txt')
-    rally = ralley_service.connect()
+    rally = None
+    rally = ralley_service.connect(rally)
     ralley_service.get_projects(rally)
+
+def test_get_stories():
+    set_env('../../environment_variables.txt')
+    ralley_service.groom_backlog(None)
