@@ -1,7 +1,7 @@
 import os
 
-def set_env():
-    variables = dict(line.strip().split('=') for line in open('../../../environment_variables.txt'))
+def set_env(filepath='../../../environment_variables.txt'):
+    variables = dict(line.strip().split('=') for line in open(filepath))
     for k, v in variables.items():
         os.environ.setdefault(k, v)
 
