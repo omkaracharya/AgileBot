@@ -7,13 +7,14 @@ def connect():
     server = get_env("RALLY_SERVER")
     user = get_env("RALLY_USER")
     password = get_env("RALLY_PASSWORD")
-    apikey = get_env("APIKEY")
+    apikey = get_env("RALLY_APIKEY")
     rally = Rally(server, user, password, apikey)
+    return rally
 
 
 def get_projects(rally):
     for workspace in rally.getWorkspaces():
-        print(workspace.oid, workspace.Name)
+        print("Workspace: " + workspace.Name)
         projects = rally.getProjects(workspace=workspace.Name)
         for project in projects:
             print(project.oid, project.Name)
@@ -28,6 +29,9 @@ def groom_backlog(start_date):
     # TODO: Implement service/ read from mock file
     if start_date.day % 2 == 0:
         return None
+
+    # Get the pending stories without any points assigned
+
     return "\n1. Story #1: Points 5\n2. Story #2: Points 10\n3. Story #3: Points 8"
 
 
