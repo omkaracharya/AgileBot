@@ -3,7 +3,7 @@ import sys
 from unittest.mock import patch
 # from nose.tools import assert_true
 import main.service.rally as ralley_service
-
+from main.data.environment import set_env
 
 
 # @patch('agilebot.os')
@@ -26,3 +26,8 @@ def test_rally_get_users(mock_rally):
     mock_rally.getAllUsers.return_value = [user1, user2]
     ralley_service.get_users(mock_rally)
 
+@patch('pyral.Rally')
+def test_rally_get_workspace(mock_rally):
+    set_env('../../environment_variables.txt')
+    rally = ralley_service.connect()
+    ralley_service.get_projects(rally)
