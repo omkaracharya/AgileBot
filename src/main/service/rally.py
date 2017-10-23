@@ -1,4 +1,5 @@
 from pyral import Rally
+
 from main.data.environment import get_env
 
 
@@ -23,11 +24,15 @@ def get_users(rally):
         print(user.oid, user.Name, user.UserName, user.Role, user.UserProfile.TimeZone)
 
 
-def groom_backlog():
+def groom_backlog(start_date):
     # TODO: Implement service/ read from mock file
-    return "\n1. Story #1: Points 5\n2. Story #2: Points 10\n3. Story #3: Points 8\n"
+    if start_date.day % 2 == 0:
+        return None
+    return "\n1. Story #1: Points 5\n2. Story #2: Points 10\n3. Story #3: Points 8"
 
 
-def plan_sprint(start_date, end_date):
+def plan_sprint(start_date):
     # TODO: Implement service/ read from mock file
+    if start_date.day % 2 == 0:
+        return None
     return "\n1. Story #1: @omkar.acharya\n2. Story #2: @yvlele"

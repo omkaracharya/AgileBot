@@ -1,3 +1,4 @@
+from main.data.commands import GIVEMYSTATUS, GROOMBACKLOG, PLANSPRINT
 from main.data.givemystatus import StatusUpdate
 from main.data.groombacklog import GroomBacklog
 from main.data.plansprint import PlanSprint
@@ -7,7 +8,7 @@ sprint_plan = PlanSprint()
 groomed_backlog = GroomBacklog()
 status_update = StatusUpdate()
 
-supported_actions = {"plansprint": sprint_plan, "groombacklog": groomed_backlog, "givemystatus": status_update}
+supported_actions = {PLANSPRINT: sprint_plan, GROOMBACKLOG: groomed_backlog, GIVEMYSTATUS: status_update}
 
 
 def get_action(command):
