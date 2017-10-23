@@ -21,7 +21,7 @@ def get_projects(rally):
 
 def get_users(rally):
     for user in rally.getAllUsers():
-        print(user.oid, user.Name, user.UserName, user.Role, user.UserProfile.TimeZone)
+        print(user.oid, user.Name, user.UserName, user.Role)
 
 
 def groom_backlog(start_date):
