@@ -28,5 +28,5 @@ Bot Implementation | Bot Integration | [#TA13](https://rally1.rallydev.com/#/165
 ## Week 3
 Deliverable | Item/Status | Issues/Tasks
 ---|---|---
-Bot Implementation | Platform Integration | [#TA11](https://rally1.rallydev.com/#/165079587024ud/detail/task/166073229848), [#TA12](https://rally1.rallydev.com/#/165079587024ud/detail/task/166073250164), [#TA14](https://rally1.rallydev.com/#/165079587024ud/detail/task/166235301688), [#DE7](https://rally1.rallydev.com/#/165079587024ud/detail/defect/166235297872), [#DE8](https://rally1.rallydev.com/#/165079587024ud/detail/defect/166235300396)
-Bot Implementation | Bot Integration | [#TA13](https://rally1.rallydev.com/#/165079587024ud/detail/task/166076311164)
+Mocking | URL path to make REST API call | [#DE9](https://rally1.rallydev.com/#/165079587024d/detail/defect/167797966432?fdp=true)
+Mocking | Mock REST API call | [#DE10](https://rally1.rallydev.com/#/165079587024d/detail/defect/167799610340?fdp=true)
