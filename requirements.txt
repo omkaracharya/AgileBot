@@ -2,3 +2,4 @@ slackclient
 request
 nose
 selenium
+pyral
