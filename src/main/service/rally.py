@@ -27,7 +27,7 @@ def get_users(rally):
 
 
 def groom_backlog(start_date):
-    if start_date is not None and start_date.day % 2 == 0:
+    if start_date is not None and start_date.day % 2 == 0: #for selenium tests
         return None
 
     rally = agilefactory.AgileFactory.factory()
@@ -44,7 +44,17 @@ def groom_backlog(start_date):
 
 
 def plan_sprint(start_date):
-    # TODO: Implement service/ read from mock file
-    if start_date.day % 2 == 0:
+
+    if start_date and start_date.day % 2 == 0: # for selenium tests
         return None
-    return "\n1. Story #1: @omkar.acharya\n2. Story #2: @yvlele"
+    # TODO : business logic to assign owner to a story
+    rally = agilefactory.AgileFactory.factory()
+    fields = "FormattedID,Name,PlanEstimate,Owner"
+    criterion = "PlanEstimate != null"
+    stories = rally.get('UserStory', fetch=fields, query=criterion)
+    # print(stories.next().details())
+    response = ['Story #' + story.FormattedID + ': '
+                + story.Name + ' (Owner: @' + str(story.Owner.DisplayName)
+                + ' Points = ' + str(story.PlanEstimate) + ')'
+                for story in stories]
+    return '\n' + '\n'.join(response)

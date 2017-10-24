@@ -1,5 +1,6 @@
 import json
 import os
+import random
 
 from pyral import Rally
 
@@ -27,14 +28,30 @@ class AgileFactory(object):
 
 
 class FakeRallyRESTResponse:
-    def __init__(self, FormattedID, Name, PlanEstimate):
+    def __init__(self, FormattedID, Name, PlanEstimate, Owner=None):
         self.FormattedID = FormattedID
         self.Name = Name
-        self.PlanEstimate = PlanEstimate
+        self.PlanEstimate = PlanEstimate or random.choice([3,5,8,13,21])
+        self.Owner = FakeRallyUser(Owner)
 
+class FakeRallyUser:
+    def __init__(self, Owner):
+        self.DisplayName = Owner['_refObjectName'] if Owner else ''
 
 class FakeRally():
+    """
+        Fake object that overrides the `get()` method of Rally Class and
+        returns a curated response using mock data
+    """
     def get(self, *args, **kwargs):
-        with open(os.path.join(os.path.dirname(__file__), "../data/mock/backlog_stories.json")) as f:
+        # print(kwargs['fetch'])
+        mock_data_repo =  {'FormattedID,Name,PlanEstimate,Owner' : '../data/mock/sprint_plan.json',
+                           'FormattedID,Name,PlanEstimate' : '../data/mock/backlog_stories.json'}
+
+        file_path = mock_data_repo[kwargs['fetch']]
+        with open(os.path.join(os.path.dirname(__file__), file_path)) as f:
             stories = json.load(f)
-        return [FakeRallyRESTResponse(story['FormattedID'], story['Name'], story['PlanEstimate']) for story in stories]
+        return [FakeRallyRESTResponse(story['FormattedID'],
+                                      story['Name'],
+                                      story['PlanEstimate'],
+                                      story['Owner'] if 'Owner' in story else None) for story in stories]
