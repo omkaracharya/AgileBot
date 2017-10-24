@@ -58,7 +58,7 @@ def perform_action(date, action):
 
 def action_test(action, date, expected_response_body):
     perform_action(date, action)
-    time.sleep(5)
+    time.sleep(15)
     tester_request = driver.find_element_by_xpath(get_latest_sent_message(action))
     assert_is_not_none(tester_request)
     expected_response_header = AT_TESTER + action.RESPONSE_HEADER
@@ -122,7 +122,8 @@ class TestActions(unittest.TestCase):
     def test_backlog(self):
         date = get_odd_date()
         action = get_action(GROOMBACKLOG)
-        action_test(action, date, "\n1. Story #1: Points 5\n2. Story #2: Points 10\n3. Story #3: Points 8")
+        action_test(action, date,
+                    "Story #1: First Story (Points: None)\nStory #2: Second Story (Points: None)\nStory #3: Third Story (Points: None)")
 
     def test_sprint(self):
         date = get_odd_date()

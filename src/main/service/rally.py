@@ -1,7 +1,7 @@
 from pyral import Rally
 
+from main.data import agilefactory
 from main.data.environment import get_env
-from main.service import AgileFactory
 
 
 def connect(rally):
@@ -30,13 +30,17 @@ def groom_backlog(start_date):
     if start_date is not None and start_date.day % 2 == 0:
         return None
 
-    rally = AgileFactory.AgileFactory.factory()
+    rally = agilefactory.AgileFactory.factory()
     # Get the pending stories without any points assigned
     #
-    story_assignment = rally.get('UserStory', fetch=True, query='State != "Closed"')
-
-    #return "\n1. Story #1: Points 5\n2. Story #2: Points 10\n3. Story #3: Points 8"
-    return story_assignment
+    fields = "FormattedID,Name,PlanEstimate"
+    criterion = "PlanEstimate = null"
+    stories = rally.get('UserStory', fetch=fields, query=criterion)
+    # TODO : business logic to assign points
+    response = ['Story #' + story.FormattedID + ': ' + story.Name + ' (Points: ' + str(story.PlanEstimate) + ')' for
+                story in
+                stories]
+    return '\n' + '\n'.join(response)
 
 
 def plan_sprint(start_date):
