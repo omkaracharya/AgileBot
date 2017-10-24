@@ -1,0 +1,41 @@
+[
+  {
+    "FormattedID": "1",
+    "Name": "First Story",
+    "Owner": {
+            "_rallyAPIMajor": "2",
+            "_rallyAPIMinor": "0",
+            "_ref": "https://rally1.rallydev.com/slm/webservice/v2.0/user/165451238692",
+            "_refObjectUUID": "876d2cf9-2c1d-41e3-a049-fc676a1d9865",
+            "_refObjectName": "jsingh8",
+            "_type": "User"
+        },
+    "PlanEstimate" : 10
+  },
+  {
+    "FormattedID": "2",
+    "Name": "Second Story",
+    "Owner": {
+            "_rallyAPIMajor": "2",
+            "_rallyAPIMinor": "0",
+            "_ref": "https://rally1.rallydev.com/slm/webservice/v2.0/user/165451238692",
+            "_refObjectUUID": "876d2cf9-2c1d-41e3-a049-fc676a1d9865",
+            "_refObjectName": "amwat",
+            "_type": "User"
+        },
+    "PlanEstimate" : 20
+  },
+  {
+    "FormattedID": "3",
+    "Name": "Third Story",
+    "Owner": {
+            "_rallyAPIMajor": "2",
+            "_rallyAPIMinor": "0",
+            "_ref": "https://rally1.rallydev.com/slm/webservice/v2.0/user/165451238692",
+            "_refObjectUUID": "876d2cf9-2c1d-41e3-a049-fc676a1d9865",
+              "_refObjectName": "oachary",
+            "_type": "User"
+        },
+    "PlanEstimate" : 15
+  }
+]
