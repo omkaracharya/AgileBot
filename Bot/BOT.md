@@ -2,8 +2,8 @@
 
 ## 1. Use Cases
 Feedback from the [Initial Design Proposal](../../999fa26cb55d864fafe9adfea8fa3bc60f84bf38/Design/Design.md) was:
-* *Refocus* [*Use Case 3*](../../999fa26cb55d864fafe9adfea8fa3bc60f84bf38/Design/Design.md#use-case-3-backlog-grooming).
-* *Text-only output would get very long, consider more concise output + action buttons.*
+* Refocus [Use Case 3](../../999fa26cb55d864fafe9adfea8fa3bc60f84bf38/Design/Design.md#use-case-3-backlog-grooming).
+* Text-only output would get very long, consider more concise output + action buttons.
 
 The [Updated Design Proposal](../Design/Design.md) includes the above modifications.
 * **Refocus [Use Case 3](../Design/Design.md#use-case-3-backlog-grooming):** The team lead will request for a *sprint plan* and provide a list of team members and stories. The bot will provide possible story assignments and team lead confirms. Bot creates sprint plan and posts link.
@@ -17,10 +17,10 @@ Our choice of programming language for the bot implementation is `Python 3.5`. W
 - As a first step, we identified the format of the responses received from the third-party entities in our project which are:
     - Rally (AgileCentral) as our Agile platform
     - GitHub as our Source Control platform
-- Then we recorded some of them in different files and used them to return 'mocked' responses
+- Then we recorded some of them in different files and used them to return 'mocked' response messages
 - When AgileBot is interacting with these services in 'mocking' mode, the mocking mechanism intercepts requests to these platforms and responds with an appropriate recorded response
 - We have used Factory pattens to generate either a mock or a real object that interacts with these platforms
-- Since we have separated different layers e.g. application, data and service, when we interact with actual platform, no code changes are required except a configuration switch change in `<application-root>/environment_variables.txt` that says `MOCK=True`
+- Since we have different layers e.g. application, data and service, when we interact with actual platform, no code changes are required except a configuration switch change in `<application-root>/environment_variables.txt` that says `MOCK=True`
 
 ## 3. Bot Implementation
 ### Bot Platform:
