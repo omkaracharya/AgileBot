@@ -24,7 +24,7 @@ class StatusUpdate:
         response = self.RESPONSE_HEADER + self.date.strftime("%m/%d/%Y")
         commits = get_commits(user, self.date)
         if commits:
-            response += commits
+            response += "\n" + "\n".join([" ".join(commit) for commit in commits])
         else:
             response += self.INVALID_RESPONSE
         return response
