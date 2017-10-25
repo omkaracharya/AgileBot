@@ -1,6 +1,7 @@
 from pyral import Rally
 
-from main.data import agilefactory
+from main.application.authority import Authority
+from main.data.agilefactory import AgileFactory
 from main.data.environment import get_env
 
 
@@ -26,35 +27,23 @@ def get_users(rally):
         print(user.oid, user.Name, user.UserName, user.Role)
 
 
-def groom_backlog(start_date):
-    if start_date is not None and start_date.day % 2 == 0: #for selenium tests
+def get_ungroomed_stories(start_date):
+    if not Authority.is_authorized_date(start_date):
         return None
 
-    rally = agilefactory.AgileFactory.factory()
+    rally = AgileFactory.factory()
     # Get the pending stories without any points assigned
-    #
     fields = "FormattedID,Name,PlanEstimate"
     criterion = "PlanEstimate = null"
     stories = rally.get('UserStory', fetch=fields, query=criterion)
-    # TODO : business logic to assign points
-    response = ['Story #' + story.FormattedID + ': ' + story.Name + ' (Points: ' + str(story.PlanEstimate) + ')' for
-                story in
-                stories]
-    return '\n' + '\n'.join(response)
+    return stories
 
 
-def plan_sprint(start_date):
-
-    if start_date and start_date.day % 2 == 0: # for selenium tests
+def get_stories_for_sprint(start_date):
+    if not Authority.is_authorized_date(start_date):
         return None
-    # TODO : business logic to assign owner to a story
-    rally = agilefactory.AgileFactory.factory()
+    rally = AgileFactory.factory()
     fields = "FormattedID,Name,PlanEstimate,Owner"
     criterion = "PlanEstimate != null"
     stories = rally.get('UserStory', fetch=fields, query=criterion)
-    # print(stories.next().details())
-    response = ['Story #' + story.FormattedID + ': '
-                + story.Name + ' (Owner: @' + str(story.Owner.DisplayName)
-                + ' Points = ' + str(story.PlanEstimate) + ')'
-                for story in stories]
-    return '\n' + '\n'.join(response)
+    return stories

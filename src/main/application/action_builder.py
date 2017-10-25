@@ -3,16 +3,29 @@ from main.data.givemystatus import StatusUpdate
 from main.data.groombacklog import GroomBacklog
 from main.data.plansprint import PlanSprint
 
-# Singletons
-sprint_plan = PlanSprint()
-groomed_backlog = GroomBacklog()
-status_update = StatusUpdate()
 
-supported_actions = {PLANSPRINT: sprint_plan, GROOMBACKLOG: groomed_backlog, GIVEMYSTATUS: status_update}
+# Singletons
+class ActionBuilder:
+    def __init__(self):
+        self.sprint_plan = None
+        self.groomed_backlog = None
+        self.status_update = None
+
+    def build(self):
+        self.sprint_plan = PlanSprint()
+        self.groomed_backlog = GroomBacklog()
+        self.status_update = StatusUpdate()
+        return self
+
+
+def get_supported_actions():
+    action_builder = ActionBuilder().build()
+    return {PLANSPRINT: action_builder.sprint_plan, GROOMBACKLOG: action_builder.groomed_backlog,
+            GIVEMYSTATUS: action_builder.status_update}
 
 
 def get_action(command):
-    return supported_actions[command]
+    return get_supported_actions()[command]
 
 
 def get_usage():

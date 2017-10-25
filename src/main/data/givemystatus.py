@@ -26,3 +26,6 @@ class StatusUpdate:
         else:
             response += self.INVALID_RESPONSE
         return response
+
+    def give(self):
+        pass

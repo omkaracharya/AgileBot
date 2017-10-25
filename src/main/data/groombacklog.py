@@ -1,7 +1,8 @@
 from datetime import datetime
 
+from main.application.authority import Authority
 from main.data.commands import GROOMBACKLOG
-from main.service.rally import groom_backlog
+from main.service.rally import get_ungroomed_stories
 
 
 class GroomBacklog:
@@ -21,9 +22,21 @@ class GroomBacklog:
                 self.date = datetime.today()
 
         response = self.RESPONSE_HEADER
-        backlog = groom_backlog(self.date)
+        backlog = get_ungroomed_stories(self.date)
+        perform_action = Authority.get_action_authorized(self, self.groom)
+
         if backlog:
-            response += backlog
+            for story in backlog:
+                perform_action(story)
+
+            response += '\n' + '\n'.join(
+                ['Story #' + story.FormattedID + ': ' + story.Name + ' (Points: ' + str(story.PlanEstimate) + ')' for
+                 story in
+                 backlog])
         else:
             response += self.INVALID_RESPONSE
         return response
+
+    # TODO : business logic to assign points
+    def groom(self):
+        pass

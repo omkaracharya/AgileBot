@@ -16,7 +16,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from main.application.action_builder import get_action
 from main.application.agilebot import run
 from main.data.commands import GIVEMYSTATUS, GROOMBACKLOG, PLANSPRINT
-from main.data.environment import set_env
+from main.data.environment import set_env, set_var
 from tests.application.xpathhelper import get_latest_sent_message, next_message_xpath
 
 AT_TESTER = '@Tester '
@@ -58,7 +58,7 @@ def perform_action(date, action):
 
 def action_test(action, date, expected_response_body):
     perform_action(date, action)
-    time.sleep(15)
+    time.sleep(5)
     tester_request = driver.find_element_by_xpath(get_latest_sent_message(action))
     assert_is_not_none(tester_request)
     expected_response_header = AT_TESTER + action.RESPONSE_HEADER
@@ -70,6 +70,7 @@ class TestActions(unittest.TestCase):
     def setUpClass(self):
         global driver, message_input, actions
         set_env()
+        set_var('MOCK', 'True')
         application = Thread(target=run)
         application.daemon = True
         application.start()
@@ -123,9 +124,12 @@ class TestActions(unittest.TestCase):
         date = get_odd_date()
         action = get_action(GROOMBACKLOG)
         action_test(action, date,
-                    "Story #1: First Story (Points: None)\nStory #2: Second Story (Points: None)\nStory #3: Third Story (Points: None)")
+                    "Story #1: First Story (Points: 1)\nStory #2: Second Story (Points: 2)\nStory #3: Third Story ("
+                    "Points: 3)")
 
     def test_sprint(self):
         date = get_odd_date()
         action = get_action(PLANSPRINT)
-        action_test(action, date, "\n1. Story #1: @omkar.acharya\n2. Story #2: @yvlele")
+        action_test(action, date,
+                    "\nStory #1: First Story (Owner: @jsingh8 Points = 10)\nStory #2: Second Story (Owner: @yvlele "
+                    "Points = 20)\nStory #3: Third Story (Owner: @oachary Points = 15)")
