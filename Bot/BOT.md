@@ -15,16 +15,25 @@ The [Updated Design Proposal](../Design/Design.md) includes the above modificati
 Our choice of programming language for the bot implementation is `Python 3.5`. We have used built-in `unittests.mock` and `nose` for mocking at the unit tests level. We have used a combination of Authority and Factory pattern to mock the responses when a running bot instance is serving the users.
 
 - As a first step, we identified the format of the responses received from the third-party entities in our project which are:
-    - Rally (AgileCentral) as our Agile platform
-    - GitHub as our Source Control platform
-- Then we recorded some of them in different files and used them to return 'mocked' response messages
-- When AgileBot is interacting with these services in 'mocking' mode, the mocking mechanism intercepts requests to these platforms and responds with an appropriate recorded response
-- We have used Factory pattens to generate either a mock or a real object that interacts with these platforms
-- Since we have different layers e.g. application, data and service, when we interact with actual platform, no code changes are required except a configuration switch change in `<application-root>/environment_variables.txt` that says `MOCK=True`
+    - Rally (AgileCentral) as our Agile platform.
+    - GitHub as our Source Control platform.
+- Then we recorded some of them in different files and used them to return 'mocked' response messages.
+- When AgileBot is interacting with these services in 'mocking' mode, the mocking mechanism intercepts requests to these platforms and responds with an appropriate recorded response.
+- We have used Factory pattens to generate either a mock or a real object that interacts with these platforms.
+- Since we have different layers e.g. application, data and service, when we interact with actual platform, no code changes are required except a configuration switch change in `<application-root>/environment_variables.txt` that says `MOCK=True`.
 
 ## 3. Bot Implementation
 ### Bot Platform:
 We have used `SlackClient` in `Python` to create a slack bot called `AgileBot`. We have created a slack channel [#agilebot-test](https://csc510project.slack.com/messages/agilebot-test/) and have added `AgileBot` to the channel. Now, whenever a user wants to use the bot, she has to call the bot using `@AgileBot` followed by a proper command. Also, direct messages to the bot is also allowed using the same bot tag.
+
+**Note:** AgileBot code has few dependencies on the python libraies as mentioned below   
+- slackclient
+- request
+- nose
+- selenium
+- pyral
+
+To install these dependecies, just run `python setup.py`.
 
 ### Bot Integration:
 We have a fully operational `Slack bot` that responds to the commands `plansprint`, `givemystatus`, and `groombacklog`, each corresponding to a test case. If the user enters an invalid command or argument, the bot replies with the `Usage` containing the following commands:
@@ -55,4 +64,4 @@ Currently, we have implemented 6 selenium tests, 2 per each use case describing 
 All iterations and the associated tasks are included in this [Worksheet](WORKSHEET.md)
 
 ## 6. Screencast
-The screencast for this milestone can be found [here]()
+The screencast for this milestone can be found [here]()a
