@@ -21,8 +21,8 @@ Deliverable | Item/Status | Issues/Tasks
 Deliverable | Item/Status | Issues/Tasks
 ---|---|---
 Bot Implementation (Use Case 1) | Platform Integration | [#TA11](https://rally1.rallydev.com/#/165079587024ud/detail/task/166073229848)
-Bot Implementation (Use Case 1) | Platform Integration | [#TA12](https://rally1.rallydev.com/#/165079587024ud/detail/task/166073250164) 
-Bot Implementation (Use Case 2) | Platform Integration | [#TA14](https://rally1.rallydev.com/#/165079587024ud/detail/task/166235301688) 
+Bot Implementation (Use Case 2) | Platform Integration | [#TA12](https://rally1.rallydev.com/#/165079587024ud/detail/task/166073250164) 
+Bot Implementation (Use Case 3) | Platform Integration | [#TA14](https://rally1.rallydev.com/#/165079587024ud/detail/task/166235301688) 
 Bot Implementation (Use case 2)| Platform Integration | [#DE7](https://rally1.rallydev.com/#/165079587024ud/detail/defect/166235297872) 
 Bot Implementation (Use Case 3)| Platform Integration | [#DE8](https://rally1.rallydev.com/#/165079587024ud/detail/defect/166235300396)
 Bot Implementation | Bot Integration      | [#TA13](https://rally1.rallydev.com/#/165079587024ud/detail/task/166076311164)
