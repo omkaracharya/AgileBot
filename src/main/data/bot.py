@@ -1,3 +1,5 @@
+# Class for Bot object.
+
 class Bot:
     def __init__(self, id, token, name="agilebot"):
         self.id = id

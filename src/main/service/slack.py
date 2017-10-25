@@ -1,3 +1,5 @@
+# Service that interacts with Slack.
+
 from slackclient import SlackClient
 
 

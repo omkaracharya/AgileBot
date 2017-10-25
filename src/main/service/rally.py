@@ -1,3 +1,5 @@
+# Service that interacts with Rally.
+
 from pyral import Rally
 
 from main.application.authority import is_authorized_date

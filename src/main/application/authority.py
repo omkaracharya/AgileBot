@@ -1,3 +1,5 @@
+# Authority that checks for authorization based on environment. Used for mocking purposes.
+
 import json
 import os
 

@@ -1,3 +1,5 @@
+# Helper for xpath queries.
+
 next_message_xpath = '../../../../following-sibling::ts-message'
 
 

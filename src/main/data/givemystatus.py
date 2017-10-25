@@ -1,3 +1,5 @@
+# Use Case: status update
+
 from datetime import datetime
 
 from main.data.commands import GIVEMYSTATUS

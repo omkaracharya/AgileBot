@@ -1,3 +1,5 @@
+# Selenium tests.
+
 import os
 import time
 import unittest
@@ -13,7 +15,7 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 
-from main.application.action_builder import get_action
+from main.application.action_builder import ActionBuilder
 from main.application.agilebot import run
 from main.data.commands import GIVEMYSTATUS, GROOMBACKLOG, PLANSPRINT
 from main.data.environment import set_env, set_var
@@ -104,34 +106,34 @@ class TestActions(unittest.TestCase):
 
     def test_no_commits(self):
         date = get_even_date()
-        action = get_action(GIVEMYSTATUS)
+        action = ActionBuilder.build(GIVEMYSTATUS)
         action_test(action, date, action.INVALID_RESPONSE)
 
     def test_no_backlog(self):
         date = get_even_date()
-        action = get_action(GROOMBACKLOG)
+        action = ActionBuilder.build(GROOMBACKLOG)
         action_test(action, date, action.INVALID_RESPONSE)
 
     def test_no_sprint(self):
         date = get_even_date()
-        action = get_action(PLANSPRINT)
+        action = ActionBuilder.build(PLANSPRINT)
         action_test(action, date, action.INVALID_RESPONSE)
 
     def test_commits(self):
         date = get_odd_date()
-        action = get_action(GIVEMYSTATUS)
+        action = ActionBuilder.build(GIVEMYSTATUS)
         action_test(action, date, "\nSome commit message for some commit id.")
 
     def test_backlog(self):
         date = get_odd_date()
-        action = get_action(GROOMBACKLOG)
+        action = ActionBuilder.build(GROOMBACKLOG)
         action_test(action, date,
                     "Story #1: First Story (Points: 1)\nStory #2: Second Story (Points: 2)\nStory #3: Third Story ("
                     "Points: 3)")
 
     def test_sprint(self):
         date = get_odd_date()
-        action = get_action(PLANSPRINT)
+        action = ActionBuilder.build(PLANSPRINT)
         action_test(action, date,
                     "\nStory #1: First Story (Owner: @jsingh8 Points = 10)\nStory #2: Second Story (Owner: @yvlele "
                     "Points = 20)\nStory #3: Third Story (Owner: @oachary Points = 15)")

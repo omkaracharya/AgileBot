@@ -1,3 +1,5 @@
+# Service that interacts with GitHub.
+
 from main.application.authority import is_authorized_date
 
 

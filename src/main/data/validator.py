@@ -1,3 +1,5 @@
+# Validator for message and authentication tokens.
+
 from main.application.action_builder import get_supported_actions
 
 

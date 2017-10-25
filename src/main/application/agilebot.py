@@ -1,7 +1,8 @@
+# The main application that runs the agilebot.
 import os
 import time
 
-from main.application.action_builder import get_action, get_usage
+from main.application.action_builder import ActionBuilder, get_usage
 from main.data.bot import Bot
 from main.data.environment import set_env
 from main.data.validator import is_valid_bot, validate_message
@@ -40,7 +41,7 @@ def execute_bot(slack_client, agilebot):
             command, request = validate_message(message)
             if command:
                 # Response to the user
-                action = get_action(command)
+                action = ActionBuilder.build(command)
                 response = action.get_response(user, request)
                 user_name = "<@" + user + "> "
                 response = user_name + response
