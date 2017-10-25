@@ -26,7 +26,7 @@ Our choice of programming language for the bot implementation is `Python 3.5`. W
 ### Bot Platform:
 We have used `SlackClient` in `Python` to create a slack bot called `AgileBot`. We have created a slack channel [#agilebot-test](https://csc510project.slack.com/messages/agilebot-test/) and have added `AgileBot` to the channel. Now, whenever a user wants to use the bot, she has to call the bot using `@AgileBot` followed by a proper command. Also, direct messages to the bot is also allowed using the same bot tag.
 
-**Note:** AgileBot code has few dependencies on the python libraies as mentioned below   
+**Note:** AgileBot code has dependencies on the list of python libraies as mentioned below   
 - slackclient
 - request
 - nose
@@ -64,4 +64,4 @@ Currently, we have implemented 6 selenium tests, 2 per each use case describing 
 All iterations and the associated tasks are included in this [Worksheet](WORKSHEET.md)
 
 ## 6. Screencast
-The screencast for this milestone can be found [here]()a
+The screencast for this milestone can be found [here]()
