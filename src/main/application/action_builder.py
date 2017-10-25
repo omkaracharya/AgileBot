@@ -19,7 +19,7 @@ def get_supported_actions():
 
 
 def get_usage():
-    return "*Usage:* `plansprint startdate enddate` or `givemystatus statusdate` or `groombacklog`" \
+    return "*Usage:* `plansprint startdate` or `givemystatus statusdate` or `groombacklog date`" \
            "\n*Date format:* MM/DD/YYYY"
 
 
