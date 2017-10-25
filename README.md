@@ -7,6 +7,9 @@
 * Jalandhar Singh (jsingh8)
 * Omkar Acharya (oachary)
 
-## Design Milestone: [here](/Design/Design.md)
-## Bot Milestone: [here](/Bot/BOT.md)
-## Task Tracking: [Worksheet](/Bot/WORKSHEET.md)
+|   Contents     |                           Link(s)                                                    |
+|-----------------|--------------------------------------------------------------------------------------|
+| Design Milestone  | [Design.md](/Design/Design.md)  |
+| Bot Milestone   | [BOT.md](/Bot/BOT.md) |
+| Task Tracking | [WORKSHEET.md](/Bot/WORKSHEET.md) |
+
