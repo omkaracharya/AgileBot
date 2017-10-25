@@ -7,6 +7,7 @@ from datetime import datetime
 from threading import Thread
 
 from nose.tools import assert_is_not_none, assert_true
+from nose.tools import nottest
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.action_chains import ActionChains
@@ -59,7 +60,7 @@ def perform_action(date, action):
     actions.send_keys(Keys.RETURN)
     actions.perform()
 
-
+@nottest
 def action_test(action, date, expected_response_body):
     perform_action(date, action)
     time.sleep(5)
