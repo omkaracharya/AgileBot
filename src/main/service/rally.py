@@ -28,15 +28,15 @@ def get_users(rally):
 
 
 def get_ungroomed_stories(start_date):
-    if not is_authorized_date(start_date):
-        return None
 
-    rally = AgileFactory.factory()
-    # Get the pending stories without any points assigned
-    fields = "FormattedID,Name,PlanEstimate"
-    criterion = "PlanEstimate = null"
-    stories = rally.get('UserStory', fetch=fields, query=criterion)
-    return stories
+    if start_date and is_authorized_date(start_date):
+        rally = AgileFactory.factory()
+        # Get the pending stories without any points assigned
+        fields = "FormattedID,Name,PlanEstimate"
+        criterion = "PlanEstimate = null"
+        stories = rally.get('UserStory', fetch=fields, query=criterion)
+        return stories
+    return None
 
 
 def get_stories_for_sprint(start_date):
