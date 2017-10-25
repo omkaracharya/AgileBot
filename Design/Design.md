@@ -140,7 +140,9 @@ AgileBot's mission is to automate these repetitive tasks to a degree that will h
 ### Architectural Diagram
 <!-- Create a diagram that illustrates the components of your bot, the platform it is embedded in, third-party services it may use, data storage it may require, etc. -->
 
-A high level architecture of AgileBot looks like this:
+A high level architecture of AgileBot looks like this:  
+
+
 ![](https://github.ncsu.edu/oachary/CSC-510-Project/blob/master/Design/Images/Architecture.png)
 
 <!--- Description:    
