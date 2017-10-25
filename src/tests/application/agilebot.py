@@ -37,6 +37,8 @@ def check_response_in_following_messages(tester_request, expected_response_heade
                 break
         except NoSuchElementException:
             message = None
+            # Fail on exception
+            assert_true(False)
 
 
 def get_odd_date():

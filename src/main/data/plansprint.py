@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from main.application.authority import Authority
+from main.application.authority import get_action_authorized
 from main.data.commands import PLANSPRINT
 from main.service.rally import get_stories_for_sprint
 
@@ -26,7 +26,7 @@ class PlanSprint:
 
         response = self.RESPONSE_HEADER + self.start_date.strftime("%m/%d/%Y")
         stories = get_stories_for_sprint(self.start_date)
-        perform_action = Authority.get_action_authorized(self, self.plan)
+        perform_action = get_action_authorized(self, self.plan)
 
         if stories:
             for story in stories:

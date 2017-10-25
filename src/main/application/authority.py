@@ -6,30 +6,30 @@ from main.data.environment import get_env
 
 
 # Currently used for Selenium and mocking purposes
-class Authority:
-    @staticmethod
-    def get_action_authorized(action, proposal):
-        strategy = proposal
-        mock = get_env('MOCK')
-        if mock and mock == 'True':
-            strategies = {PLANSPRINT: fake_plan, GROOMBACKLOG: fake_groom,
-                          GIVEMYSTATUS: fake_give}
-            strategy = strategies[action.command]
-        return strategy
+def should_mock():
+    mock = get_env('MOCK')
+    return mock and mock == 'True'
 
-    @staticmethod
-    def is_authorized_date(date):
-        mock = get_env('MOCK')
-        if mock and mock == 'True' and date.day % 2 == 0:
-            return False
-        return True
 
-    @staticmethod
-    def get_authorized_connection_or_permission():
-        mock = get_env('MOCK')
-        if mock and mock == 'True':
-            return FakeRally()
-        return None
+def get_action_authorized(action, proposal):
+    strategy = proposal
+    if should_mock():
+        strategies = {PLANSPRINT: fake_plan, GROOMBACKLOG: fake_groom,
+                      GIVEMYSTATUS: fake_give}
+        strategy = strategies[action.command]
+    return strategy
+
+
+def is_authorized_date(date):
+    if should_mock() and date.day % 2 == 0:
+        return False
+    return True
+
+
+def get_authorized_connection_or_permission():
+    if should_mock():
+        return FakeRally()
+    return None
 
 
 def fake_plan(story):

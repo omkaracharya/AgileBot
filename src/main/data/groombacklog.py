@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from main.application.authority import Authority
+from main.application.authority import get_action_authorized
 from main.data.commands import GROOMBACKLOG
 from main.service.rally import get_ungroomed_stories
 
@@ -23,7 +23,7 @@ class GroomBacklog:
 
         response = self.RESPONSE_HEADER
         backlog = get_ungroomed_stories(self.date)
-        perform_action = Authority.get_action_authorized(self, self.groom)
+        perform_action = get_action_authorized(self, self.groom)
 
         if backlog:
             for story in backlog:

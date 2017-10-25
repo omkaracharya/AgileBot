@@ -1,6 +1,6 @@
 from pyral import Rally
 
-from main.application.authority import Authority
+from main.application.authority import get_authorized_connection_or_permission
 from main.data.environment import get_env
 
 
@@ -17,7 +17,7 @@ class AgileFactory:
 
     @staticmethod
     def factory():
-        grant = Authority.get_authorized_connection_or_permission()
+        grant = get_authorized_connection_or_permission()
         if grant:
             return grant
         return AgileFactory.connect()

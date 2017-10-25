@@ -1,6 +1,6 @@
 from pyral import Rally
 
-from main.application.authority import Authority
+from main.application.authority import is_authorized_date
 from main.data.agilefactory import AgileFactory
 from main.data.environment import get_env
 
@@ -28,7 +28,7 @@ def get_users(rally):
 
 
 def get_ungroomed_stories(start_date):
-    if not Authority.is_authorized_date(start_date):
+    if not is_authorized_date(start_date):
         return None
 
     rally = AgileFactory.factory()
@@ -40,7 +40,7 @@ def get_ungroomed_stories(start_date):
 
 
 def get_stories_for_sprint(start_date):
-    if not Authority.is_authorized_date(start_date):
+    if not is_authorized_date(start_date):
         return None
     rally = AgileFactory.factory()
     fields = "FormattedID,Name,PlanEstimate,Owner"
