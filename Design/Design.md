@@ -20,10 +20,10 @@ AgileBot's mission is to automate these repetitive tasks to a degree that will h
 <!-- Does your bot have a conversation with users (e.g. hubot), or does it just response to events (e.g., coveralls bot on GitHub)? -->
 
 * @AgileBot can be added to the team's Slack Room.
-* For backlog grooming, the Scrum master can mention @AgileBot with text `GroomBacklog` to automatically assign points to the backlog stories
+* For backlog grooming, the Scrum master can mention @AgileBot with text `GroomBacklog` to automatically assign points to the backlog stories.
 * For sprint planning, a Team Leader can invoke AgileBot by mentioning it to `PlanSprint`.
 * Engineers working as a part of the sprint can submit their everyday statuses by mentioning AgileBot with the text `GiveMyStatus`.
-* Scrum Master/Team Leader can view the entire team's status by calling `GetTeamStatus`
+* Scrum Master/Team Leader can view the entire team's status by calling `GetTeamStatus`.
 
 <!-- Does your bot fit in one of the categories we talked about in class? A code drone vs documentation bot? -->
 > AgileBot fits into the **Space Reactor** category.
@@ -51,7 +51,7 @@ AgileBot's mission is to automate these repetitive tasks to a degree that will h
 
     [S1] Provide the list of team members, their quota, and stories.
     [S2] Displays story assignments confirmation message with action button.
-    [S3] Accepts the assignment by clicking action button
+    [S3] Accepts the assignment by clicking action button.
     [S3] Create a sprint plan.
     [S4] Post the link that contains details for team members to look at.
     
@@ -76,7 +76,7 @@ AgileBot's mission is to automate these repetitive tasks to a degree that will h
 
     [S1] Provide list of dates.
     [S2] Verify the git commits returned by AgileBot.
-    [S3] Update the interactive message if needed
+    [S3] Update the interactive message if needed.
     [S3] Post the link.
     
 **4. Alternative Flows**
@@ -90,7 +90,7 @@ AgileBot's mission is to automate these repetitive tasks to a degree that will h
 
 **1. Preconditions**
 * Agile platform with APIs available for automation.
-* Pending stories with unassigned points 
+* Pending stories with unassigned points. 
 * Related bugs with priorities.
 * Engineers with available quotas.
 * Teams with user information and roles.
@@ -101,8 +101,8 @@ AgileBot's mission is to automate these repetitive tasks to a degree that will h
 **3. Subflows**
 
     [S1] Provide list of team members, stories, and bugs.
-    [S2] Interactive message with posssible point allocation
-    [S3] Interactive message with action buttons to confirm or deny
+    [S2] Interactive message with posssible point allocation.
+    [S3] Interactive message with action buttons to confirm or deny.
     [S4] Assign the points considering related bug priority and severity.
     [S5] Agile Platform Link to view the newly groomed stories.
 
@@ -110,7 +110,7 @@ AgileBot's mission is to automate these repetitive tasks to a degree that will h
 
     [E1] Team members are unavailable.
     [E2] Stories are unavailable.
-    [E3] Stories are available but points already assigned
+    [E3] Stories are available but points already assigned.
     
 
 ## 4. Design Sketches
