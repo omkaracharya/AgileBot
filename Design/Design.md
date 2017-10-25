@@ -12,7 +12,7 @@ A huge chunk of time is spent every day in menial agile processes. For instance,
 
 ## 2. Bot Description
 <!--What does your bot do? -->
-AgileBot is a [SlackBot](https://get.slack.help/hc/en-us/articles/202026038) that interfaces with Project planning tool [Taiga](https://taiga.io/). When called for its services, AgileBot looks up for unassigned bugs and user stories, estimates their time frame and assigns the user stories to the 'best' engineer after taking into consideration various heuristics.
+AgileBot is a [SlackBot](https://get.slack.help/hc/en-us/articles/202026038) that interfaces with Project planning tool [Rally](https://rally1.rallydev.com). When called for its services, AgileBot looks up for unassigned bugs and user stories, estimates their time frame and assigns the user stories to the 'best' engineer after taking into consideration various heuristics.
 
 <!--Why is a bot a good solution for the problem? -->
 AgileBot's mission is to automate these repetitive tasks to a degree that will help engineers stay in flow by reducing distractions, eliminating context switches and thus increasing productivity.
@@ -153,13 +153,13 @@ A high level architecture of AgileBot looks like this:
     * Bot Reactor Engine
     * REST Interactor
         * GitHub
-        * Taiga
+        * Rally
 -->
 ### Architecture components
 <!-- Describe the architecture components in text. -->
 
 AgileBot will interact with *three* third party components:
-* Taiga
+* Rally
 * GitHub
 * Slack
 
@@ -167,16 +167,16 @@ For communication with these third party services, AgileBot needs to have the kn
 
 **AgileBot** has *four* major components:
 
-* Taiga Manager
+* Rally Manager
 * GitHub Manager
 * Slack Event Handler
 * Bot Reactor Engine
 
-The handlers and managers would be registered with the Bot Reactor Engine during startup. When a user sends a text message in a Slack channel that has AgileBot as a member, AgileBot would take actions based on that text. Respective event handler would be invoked and depending on the context, AgileBot would act and talk to the components like Taiga, Git or Slack over REST interface.
+The handlers and managers would be registered with the Bot Reactor Engine during startup. When a user sends a text message in a Slack channel that has AgileBot as a member, AgileBot would take actions based on that text. Respective event handler would be invoked and depending on the context, AgileBot would act and talk to the components like Rally, Git or Slack over REST interface.
 
 ### Per Component Description
 
-* **[Taiga](https://taiga.io/)** is a free open source project management platform for agile developers & designers and project managers who want a beautiful tool that makes work truly enjoyable. As part of this project, Agilebot will require the following functionalities from Taiga.
+* **[Rally](https://rally1.rallydev.com)** is a free open source project management platform for agile developers & designers and project managers who want a beautiful tool that makes work truly enjoyable. As part of this project, Agilebot will require the following functionalities from Rally.
     * Manage User stories 
         * Create/Modify/Delete Story.
         * List of Stories in total or per user.
@@ -187,7 +187,7 @@ The handlers and managers would be registered with the Bot Reactor Engine during
         * Create/Modify/Delete task.
         * List of Tasks in total or per user. 
     
-    To achieve this functionality, *Taiga Manager* will send the REST request to the Taiga. For instance: There is an un-assigned bug/story. AgileBot will get the task stats for each user, plus some extra information from Taiga. It can then find the work load of each user and accordingly assign the story to the user.
+    To achieve this functionality, *Rally Manager* will send the REST request to the Rally. For instance: There is an un-assigned bug/story. AgileBot will get the task stats for each user, plus some extra information from Rally. It can then find the work load of each user and accordingly assign the story to the user.
 
 * **[Git](https://git-scm.com/)** is a version control system for tracking changes in computer files and **[GitHub](https://github.com/)** is a hosting service for Git repositories to coordinate work on those files among multiple people. AgileBot would request GitHub for data like check-in comments, review comments, CD/CI stats if available using REST APIs. This data will be used to provide the status updates of a feature or team member to Team leader or Scrum master.
 
