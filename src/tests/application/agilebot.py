@@ -1,4 +1,4 @@
-# Selenium tests.
+# Selenium tests
 
 import os
 import time
@@ -44,7 +44,7 @@ def check_response_in_following_messages(tester_request, expected_response_heade
 
 
 def get_odd_date():
-    return datetime.strptime("10/23/2017", "%m/%d/%Y")
+    return datetime.strptime("10/21/2017", "%m/%d/%Y")
 
 
 def get_even_date():
@@ -122,18 +122,17 @@ class TestActions(unittest.TestCase):
     def test_commits(self):
         date = get_odd_date()
         action = ActionBuilder.build(GIVEMYSTATUS)
-        action_test(action, date, "\nSome commit message for some commit id.")
+        action_test(action, date,
+                    "02/21/2017 04:50:06 Added New File\n02/21/2017 04:59:34 Updated Data\n02/21/2017 03:46:19 Initial commit")
 
     def test_backlog(self):
         date = get_odd_date()
         action = ActionBuilder.build(GROOMBACKLOG)
         action_test(action, date,
-                    "Story #1: First Story (Points: 1)\nStory #2: Second Story (Points: 2)\nStory #3: Third Story ("
-                    "Points: 3)")
+                    "Story #1: First Story (Points: 1)\nStory #2: Second Story (Points: 2)\nStory #3: Third Story (Points: 3)")
 
     def test_sprint(self):
         date = get_odd_date()
         action = ActionBuilder.build(PLANSPRINT)
         action_test(action, date,
-                    "\nStory #1: First Story (Owner: @jsingh8 Points = 10)\nStory #2: Second Story (Owner: @yvlele "
-                    "Points = 20)\nStory #3: Third Story (Owner: @oachary Points = 15)")
+                    "\nStory #1: First Story (Owner: @jsingh8 Points = 10)\nStory #2: Second Story (Owner: @yvlele Points = 20)\nStory #3: Third Story (Owner: @oachary Points = 15)")
