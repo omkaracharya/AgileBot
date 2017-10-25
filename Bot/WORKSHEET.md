@@ -8,7 +8,6 @@ Deliverable | Item/Status | Issues/Tasks
 Use Case Refinement | [Use Case 3](https://github.ncsu.edu/oachary/CSC-510-Project/blob/master/Design/Design.md#use-case-3-backlog-grooming) | [#DE3](https://rally1.rallydev.com/#/165079587024ud/detail/defect/165459751216)
 Design Proposal | Bot Design | [#US9](https://rally1.rallydev.com/#/165079587024d/detail/userstory/165461712512) 
 Bot Implementation | Investigate JIRA vs. Taiga vs. Rally | [#US10](https://rally1.rallydev.com/#/165079587024ud/detail/userstory/165465912252)
-Create Mock Data | Mock data for git hub status | [#US16](https://rally1.rallydev.com/#/165079587024d/detail/userstory/166144740648)
 
 <!--
 ## Week 2
@@ -21,8 +20,12 @@ Deliverable | Item/Status | Issues/Tasks
 ## Week 2
 Deliverable | Item/Status | Issues/Tasks
 ---|---|---
-Bot Implementation | Platform Integration | [#TA11](https://rally1.rallydev.com/#/165079587024ud/detail/task/166073229848), [#TA12](https://rally1.rallydev.com/#/165079587024ud/detail/task/166073250164), [#TA14](https://rally1.rallydev.com/#/165079587024ud/detail/task/166235301688), [#DE7](https://rally1.rallydev.com/#/165079587024ud/detail/defect/166235297872), [#DE8](https://rally1.rallydev.com/#/165079587024ud/detail/defect/166235300396)
-Bot Implementation | Bot Integration | [#TA13](https://rally1.rallydev.com/#/165079587024ud/detail/task/166076311164)
+Bot Implementation (Use Case 1) | Platform Integration | [#TA11](https://rally1.rallydev.com/#/165079587024ud/detail/task/166073229848)
+Bot Implementation (Use Case 1) | Platform Integration | [#TA12](https://rally1.rallydev.com/#/165079587024ud/detail/task/166073250164) 
+Bot Implementation (Use Case 2) | Platform Integration | [#TA14](https://rally1.rallydev.com/#/165079587024ud/detail/task/166235301688) 
+Bot Implementation (Use case 2)| Platform Integration | [#DE7](https://rally1.rallydev.com/#/165079587024ud/detail/defect/166235297872) 
+Bot Implementation (Use Case 3)| Platform Integration | [#DE8](https://rally1.rallydev.com/#/165079587024ud/detail/defect/166235300396)
+Bot Implementation | Bot Integration      | [#TA13](https://rally1.rallydev.com/#/165079587024ud/detail/task/166076311164)
 
 
 
@@ -32,6 +35,6 @@ Deliverable | Item/Status | Issues/Tasks
 Mocking | Mocking Service Component | [#US15](https://rally1.rallydev.com/#/165079587024d/detail/userstory/166072465984)
 Mocking | URL path to make REST API call | [#DE9](https://rally1.rallydev.com/#/165079587024d/detail/defect/167797966432?fdp=true)
 Mocking | Mock REST API call | [#DE10](https://rally1.rallydev.com/#/165079587024d/detail/defect/167799610340?fdp=true)
-User Quota and Stories | Provide the list of team members, their quota, and stories | [#US11](https://rally1.rallydev.com/#/165079587024d/detail/userstory/166072465984)
-Commits | List of Git Commits | [#US12](https://rally1.rallydev.com/#/165079587024d/detail/userstory/165498115104)
+Mocking | Provide the list of team members, their quota, and stories | [#US11](https://rally1.rallydev.com/#/165079587024d/detail/userstory/166072465984)
+Mocking | List of Git Commits | [#US12](https://rally1.rallydev.com/#/165079587024d/detail/userstory/165498115104)
 Testing | Selenium Scripting | [#US17](https://rally1.rallydev.com/#/165079587024d/detail/userstory/167023725292)
