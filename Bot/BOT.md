@@ -8,7 +8,7 @@ Feedback from the [Initial Design Proposal](../../999fa26cb55d864fafe9adfea8fa3b
 The [Updated Design Proposal](../Design/Design.md) includes the above modifications.
 * **Refocus [Use Case 3](../Design/Design.md#use-case-3-backlog-grooming):** The team lead will request for a *sprint plan* and provide a list of team members and stories. The bot will provide possible story assignments and team lead confirms. Bot creates sprint plan and posts link.
 
-* **Text-only output would get very long, consider more concise output + action buttons:** After the feedback from the initial design proposal, we have concised the output. And we have planned to add the action buttons as well. For more information, please check the [desgin sketches wireframe](../Design/Design.md#4-design-sketches)
+* **Text-only output would get very long, consider more concise output + action buttons:** After the feedback from the initial design proposal, we have concised the output and have planned to add the action buttons for each use case. For more information, please check the [desgin sketches wireframe](../Design/Design.md#4-design-sketches)
 
 ## 2. Mocking
 <!-- Authority pattern -->
