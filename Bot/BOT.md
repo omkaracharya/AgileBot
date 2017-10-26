@@ -64,4 +64,4 @@ Currently, we have implemented 6 selenium tests, 2 per each use case describing 
 All iterations and the associated tasks are included in this [Worksheet](WORKSHEET.md)
 
 ## 6. Screencast
-The screencast for this milestone can be found [here]()
+The screencast for this milestone can be found [here](https://youtu.be/hhpNxg8dAYc)
