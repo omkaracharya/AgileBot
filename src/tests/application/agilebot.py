@@ -105,34 +105,35 @@ class TestActions(unittest.TestCase):
     def tearDownClass(self):
         driver.quit()
 
-    def test_no_commits(self):
+    def test_06_no_commits(self):
         date = get_even_date()
         action = ActionBuilder.build(GIVEMYSTATUS)
         action_test(action, date, action.INVALID_RESPONSE)
+        time.sleep(10)
 
-    def test_no_backlog(self):
+    def test_02_no_backlog(self):
         date = get_even_date()
         action = ActionBuilder.build(GROOMBACKLOG)
         action_test(action, date, action.INVALID_RESPONSE)
 
-    def test_no_sprint(self):
+    def test_04_no_sprint(self):
         date = get_even_date()
         action = ActionBuilder.build(PLANSPRINT)
         action_test(action, date, action.INVALID_RESPONSE)
 
-    def test_commits(self):
+    def test_05_commits(self):
         date = get_odd_date()
         action = ActionBuilder.build(GIVEMYSTATUS)
         action_test(action, date,
                     "02/21/2017 04:50:06 Added New File\n02/21/2017 04:59:34 Updated Data\n02/21/2017 03:46:19 Initial commit")
 
-    def test_backlog(self):
+    def test_01_backlog(self):
         date = get_odd_date()
         action = ActionBuilder.build(GROOMBACKLOG)
         action_test(action, date,
                     "Story #1: First Story (Points: 1)\nStory #2: Second Story (Points: 2)\nStory #3: Third Story (Points: 3)")
 
-    def test_sprint(self):
+    def test_03_sprint(self):
         date = get_odd_date()
         action = ActionBuilder.build(PLANSPRINT)
         action_test(action, date,
