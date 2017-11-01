@@ -1,11 +1,13 @@
+# Unit Tests.
+
 from datetime import datetime
-import sys
-# import request
 from unittest.mock import patch
+
 from nose.tools import assert_true
+
+import main.service.github as github
 import main.service.rally as ralley_service
 from main.data.environment import set_env
-import main.service.github as github
 
 
 # @patch('agilebot.os')
@@ -14,7 +16,6 @@ import main.service.github as github
 #     mock_os.environ.get.assert_called_with("BOT_ID")
 
 class User:
-
     def __init__(self, oid, username, name, role):
         self.oid = oid
         self.Name = name
@@ -29,6 +30,7 @@ def test_rally_get_users(mock_rally):
     mock_rally.getAllUsers.return_value = [user1, user2]
     ralley_service.get_users(mock_rally)
 
+
 # @patch('pyral.Rally')
 # def test_rally_get_workspace(mock_rally):
 #     set_env('../../environment_variables.txt')
@@ -40,12 +42,14 @@ def test_get_stories():
     set_env('../../environment_variables.txt')
     ralley_service.get_ungroomed_stories(None)
 
+
 def test_get_commits_with_valid_date():
     set_env('../../environment_variables.txt')
     user = 'kpohe'
     strdate = '11/11/2017'
     date = datetime.strptime(strdate, "%m/%d/%Y")
     assert_true(github.get_commits(user, date) != None)
+
 
 def test_get_commits_with_unauthorized_date():
     set_env('../../environment_variables.txt')
