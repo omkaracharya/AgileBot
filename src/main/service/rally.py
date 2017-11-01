@@ -30,7 +30,6 @@ def get_users(rally):
 
 
 def get_ungroomed_stories(start_date):
-
     if start_date and is_authorized_date(start_date):
         rally = AgileFactory.factory()
         # Get the pending stories without any points assigned

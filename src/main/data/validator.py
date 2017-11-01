@@ -1,5 +1,7 @@
 # Validator for message and authentication tokens.
 
+from datetime import datetime
+
 from main.application.action_builder import get_supported_actions
 
 
@@ -24,3 +26,11 @@ def validate_message(message):
     if command in get_supported_actions():
         return command, request
     return None, None
+
+
+def get_valid_date(date):
+    try:
+        validated_date = datetime.strptime(date, "%m/%d/%Y")
+        return validated_date
+    except Exception as e:
+        return datetime.today()
