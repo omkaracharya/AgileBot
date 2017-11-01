@@ -1,15 +1,13 @@
 # Use case: plan sprint
 
-from datetime import datetime
-
 from main.application.authority import get_action_authorized
 from main.data.commands import PLANSPRINT
+from main.data.validator import get_valid_date
 from main.service.rally import get_stories_for_sprint
 
 
 class PlanSprint:
     def __init__(self):
-        self.start_date = datetime.today()
         self.command = PLANSPRINT
         self.RESPONSE_HEADER = "Tentative Sprint Plan for "
         self.INVALID_RESPONSE = "\nNo stories in sprint to plan."
@@ -19,15 +17,12 @@ class PlanSprint:
         pass
 
     def get_response(self, user, request):
+        parse_date = None
         if request:
-            start_date = request[0]
-            try:
-                self.start_date = datetime.strptime(start_date, "%m/%d/%Y")
-            except Exception as e:
-                self.start_date = datetime.today()
-
-        response = self.RESPONSE_HEADER + self.start_date.strftime("%m/%d/%Y")
-        stories = get_stories_for_sprint(self.start_date)
+            parse_date = request[0]
+        start_date = get_valid_date(parse_date)
+        response = self.RESPONSE_HEADER + start_date.strftime("%m/%d/%Y")
+        stories = get_stories_for_sprint(start_date)
         perform_action = get_action_authorized(self, self.plan)
 
         if stories:
