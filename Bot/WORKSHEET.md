@@ -2,6 +2,10 @@
 
 ### [Sprint Board](https://rally1.rallydev.com/#/165079587024ud/teamboard)
 
+### Credential for Instructors
+Username: lele.yogesh@gmail.com
+Password: G0Pack!@#
+
 ## Week 1
 Deliverable | Item/Status | Issues/Tasks
 ---|---|---
