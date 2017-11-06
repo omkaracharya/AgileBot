@@ -1,7 +1,7 @@
 # Service that interacts with Rally.
 
+from main.application.agilefactory import get_instance
 from main.application.authority import is_authorized_date
-from main.data.agilefactory import get_instance
 
 
 def get_projects():

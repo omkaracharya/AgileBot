@@ -14,7 +14,7 @@ class GroomBacklog:
         self.RESPONSE_HEADER = "Groomed Backlog:"
         self.INVALID_RESPONSE = "\nNo stories in backlog to groom."
 
-    def get_response(self, user, request):
+    def get_response(self, user, all_users, request, rally):
         # TODO: Implement service/ read from mock file
         if request:
             date = request[0]

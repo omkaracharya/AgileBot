@@ -34,3 +34,7 @@ def get_valid_date(date):
         return validated_date
     except Exception as e:
         return datetime.today()
+
+
+def is_valid_user(user):
+    return not user['is_bot'] and user['name'] != 'slackbot' and not user['deleted']
