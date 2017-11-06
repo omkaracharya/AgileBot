@@ -17,7 +17,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 
 from main.application.action_builder import ActionBuilder
-from main.application.agilebot import run
+from main.application.application import run
 from main.data.commands import GIVEMYSTATUS, GROOMBACKLOG, PLANSPRINT
 from main.data.environment import set_env, set_var
 from tests.application.xpathhelper import get_latest_sent_message, next_message_xpath
@@ -59,6 +59,7 @@ def perform_action(date, action):
     actions.send_keys("@AgileBot " + action.command + ' ' + date.strftime("%m/%d/%Y"))
     actions.send_keys(Keys.RETURN)
     actions.perform()
+
 
 @nottest
 def action_test(action, date, expected_response_body):
