@@ -14,10 +14,6 @@ supported_actions = {PLANSPRINT: sprint_plan, GROOMBACKLOG: groomed_backlog,
                      GIVEMYSTATUS: status_update}
 
 
-def get_supported_actions():
-    return supported_actions.keys()
-
-
 def get_usage():
     return "*Usage:* `plansprint startdate` or `givemystatus statusdate` or `groombacklog date`" \
            "\n*Date format:* MM/DD/YYYY"

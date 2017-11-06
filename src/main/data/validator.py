@@ -2,7 +2,7 @@
 
 from datetime import datetime
 
-from main.application.action_builder import get_supported_actions
+from main.data.commands import get_supported_commands
 
 
 def is_valid_bot(bot_id, bot_token):
@@ -23,7 +23,7 @@ def validate_message(message):
     split_message = message.split(" ")
     command = split_message[0].lower()
     request = split_message[1:]
-    if command in get_supported_actions():
+    if command in get_supported_commands():
         return command, request
     return None, None
 
