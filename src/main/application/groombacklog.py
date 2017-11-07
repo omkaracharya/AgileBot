@@ -28,17 +28,19 @@ class GroomBacklog:
         perform_action = get_action_authorized(self, self.groom)
 
         if backlog:
-            for story in backlog:
-                perform_action(story)
-
+            stories = [story for story in backlog]
+            perform_action(stories)
             response += '\n' + '\n'.join(
                 ['Story #' + story.FormattedID + ': ' + story.Name + ' (Points: ' + str(story.PlanEstimate) + ')' for
                  story in
-                 backlog])
+                 stories])
         else:
             response += self.INVALID_RESPONSE
         return response
 
     # TODO : business logic to assign points
-    def groom(self):
-        pass
+    def groom(self, stories):
+        import random
+        for story in stories:
+            # print (story.details())
+            story.PlanEstimate = random.choice([1,2,3,5,8,13,21])
