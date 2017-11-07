@@ -46,8 +46,8 @@ def get_ungroomed_stories(start_date):
         rally = get_instance()
         # Get the pending stories without any points assigned
         fields = "FormattedID,Name,PlanEstimate"
-        criterion = "PlanEstimate = null"
-        stories = rally.get('UserStory', fetch=fields, query=criterion)
+        criterion = "PlanEstimate = null OR PlanEstimate = 0"
+        stories = rally.get('UserStory', fetch=True, query=criterion)
         return stories
     return None
 
