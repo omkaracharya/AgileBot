@@ -67,7 +67,7 @@ def run():
         # Create a Bot object
         agilebot = Bot(bot_id, bot_token, bot_name)
         slack_client = get_slackclient()
-        app.run(host='0.0.0.0', port=4500)
+        # app.run(host='0.0.0.0', port=4500)
         if slack_client.rtm_connect():
             print("'" + agilebot.name + "' is active on Slack..")
             rally = get_instance()
