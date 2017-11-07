@@ -1,22 +1,11 @@
 # Service that interacts with Rally.
 
-from pyral import Rally
-
+from main.application.agilefactory import get_instance
 from main.application.authority import is_authorized_date
-from main.data.agilefactory import AgileFactory
-from main.data.environment import get_env
 
 
-def connect(rally):
-    server = get_env("RALLY_SERVER")
-    user = get_env("RALLY_USER")
-    password = get_env("RALLY_PASSWORD")
-    apikey = get_env("RALLY_APIKEY")
-    rally = Rally(server, user, password, apikey)
-    return rally
-
-
-def get_projects(rally):
+def get_projects():
+    rally = get_instance()
     for workspace in rally.getWorkspaces():
         print("Workspace: " + workspace.Name)
         projects = rally.getProjects(workspace=workspace.Name)
@@ -24,15 +13,37 @@ def get_projects(rally):
             print(project.oid, project.Name)
 
 
-def get_users(rally):
-    for user in rally.getAllUsers():
-        print(user.oid, user.Name, user.UserName, user.Role)
+def get_iterations():
+    rally = get_instance()
+    iterations = rally.get('Iteration')
+    return iterations
+
+
+# Gets the active sprint at given date
+def get_iteration_by_date(date):
+    rally = get_instance()
+    query = 'StartDate <= ' + date.strftime("%Y-%m-%d") + ' and EndDate >= ' + date.strftime("%Y-%m-%d")
+    iterations = [it for it in rally.get('Iteration', query=query)]
+    # for iteration in iterations:
+    #     print(iteration.details())
+    if iterations and len(iterations) > 0:
+        return iterations[0]
+    return None
+
+
+def get_users():
+    rally = get_instance()
+    return rally.getAllUsers()
+
+
+def get_user_info(user_oid):
+    rally = get_instance()
+    return rally.getUserInfo(user_oid)
 
 
 def get_ungroomed_stories(start_date):
-
     if start_date and is_authorized_date(start_date):
-        rally = AgileFactory.factory()
+        rally = get_instance()
         # Get the pending stories without any points assigned
         fields = "FormattedID,Name,PlanEstimate"
         criterion = "PlanEstimate = null"
@@ -41,11 +52,25 @@ def get_ungroomed_stories(start_date):
     return None
 
 
-def get_stories_for_sprint(start_date):
-    if not is_authorized_date(start_date):
-        return None
-    rally = AgileFactory.factory()
-    fields = "FormattedID,Name,PlanEstimate,Owner"
-    criterion = "PlanEstimate != null"
+# Gets the stories for given sprint that are groomed but unassigned
+def get_stories_for_sprint(iteration_oid):
+    rally = get_instance()
+    fields = "FormattedID,Name,PlanEstimate,Owner,Iteration"
+    criterion = "PlanEstimate != null and Owner = null and Iteration.oid = " + str(iteration_oid)
     stories = rally.get('UserStory', fetch=fields, query=criterion)
     return stories
+
+
+def get_user_capacities_for_iteration(iteration_oid):
+    rally = get_instance()
+    fields = "Capacity,User,Iteration,TaskEstimates"
+    query = "Iteration.oid = " + str(iteration_oid)
+    capacities = rally.get('UserIterationCapacity', query=query, fetch=fields)
+    return capacities
+
+
+def update_story_assignment(stories):
+    rally = get_instance()
+    for story in stories:
+        if story.Owner:
+            rally.post('UserStory', {'ObjectID': story.oid, 'Owner': story.Owner.oid})

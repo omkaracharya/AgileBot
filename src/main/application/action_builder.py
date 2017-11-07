@@ -1,9 +1,10 @@
 # Builder Pattern class that builds the corresponding singleton action object based on the specified command.
 
+from main.application.groombacklog import GroomBacklog
+from main.application.plansprint import PlanSprint
+
+from main.application.givemystatus import StatusUpdate
 from main.data.commands import GIVEMYSTATUS, GROOMBACKLOG, PLANSPRINT
-from main.data.givemystatus import StatusUpdate
-from main.data.groombacklog import GroomBacklog
-from main.data.plansprint import PlanSprint
 
 # Singletons
 sprint_plan = PlanSprint()
@@ -12,10 +13,6 @@ status_update = StatusUpdate()
 
 supported_actions = {PLANSPRINT: sprint_plan, GROOMBACKLOG: groomed_backlog,
                      GIVEMYSTATUS: status_update}
-
-
-def get_supported_actions():
-    return supported_actions.keys()
 
 
 def get_usage():

@@ -1,6 +1,8 @@
 # Validator for message and authentication tokens.
 
-from main.application.action_builder import get_supported_actions
+from datetime import datetime
+
+from main.data.commands import get_supported_commands
 
 
 def is_valid_bot(bot_id, bot_token):
@@ -21,6 +23,18 @@ def validate_message(message):
     split_message = message.split(" ")
     command = split_message[0].lower()
     request = split_message[1:]
-    if command in get_supported_actions():
+    if command in get_supported_commands():
         return command, request
     return None, None
+
+
+def get_valid_date(date):
+    try:
+        validated_date = datetime.strptime(date, "%m/%d/%Y")
+        return validated_date
+    except Exception as e:
+        return datetime.today()
+
+
+def is_valid_user(user):
+    return not user['is_bot'] and user['name'] != 'slackbot' and not user['deleted']
