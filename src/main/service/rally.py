@@ -2,6 +2,7 @@
 
 from main.application.agilefactory import get_instance
 from main.application.authority import is_authorized_date
+>>>>>>> Temporary merge branch 2
 
 
 def get_projects():
