@@ -25,8 +25,8 @@ class PlanSprint:
                         story.Owner = user_capacities[0].User
                         user_capacities[0].TaskEstimates += story.PlanEstimate
 
-                        # Uncomment after feedback from interactive buttons
-                        # update_story_assignment(stories)
+        # Uncomment after feedback from interactive buttons
+        # update_story_assignment(stories)
 
     def get_response(self, user, all_users, request, rally):
         parse_date = None

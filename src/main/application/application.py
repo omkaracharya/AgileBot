@@ -7,10 +7,9 @@ from main.application.agilefactory import get_instance
 from main.data.bot import Bot
 from main.data.environment import set_env
 from main.data.validator import is_valid_bot, validate_message, is_valid_user
-from main.service.slack import get_connection
+from main.service.slack import get_slackclient, get_bot_credentials
 from main.data.user import User
-
-from datetime import datetime
+from main.application.http_server import app
 
 READ_WEBSOCKET_DELAY = 1
 
@@ -59,16 +58,6 @@ def execute_bot(slack_client, rally, agilebot, all_users):
         time.sleep(READ_WEBSOCKET_DELAY)
 
 
-def get_bot_credentials():
-    """
-    This function gets the environmental variables set for the bot details
-    :return: bot_id, bot_token
-    """
-    bot_id = os.environ.get("AGILEBOT_ID")
-    bot_token = os.environ.get("AGILEBOT_TOKEN")
-    return bot_id, bot_token
-
-
 def run():
     # Initialize the bot
     bot_id, bot_token = get_bot_credentials()
@@ -77,7 +66,8 @@ def run():
     if is_valid_bot(bot_id, bot_token):
         # Create a Bot object
         agilebot = Bot(bot_id, bot_token, bot_name)
-        slack_client = get_connection(bot_token)
+        slack_client = get_slackclient()
+        app.run(host='0.0.0.0', port=4500)
         if slack_client.rtm_connect():
             print("'" + agilebot.name + "' is active on Slack..")
             rally = get_instance()

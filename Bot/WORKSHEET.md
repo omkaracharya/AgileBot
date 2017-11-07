@@ -2,6 +2,10 @@
 
 ### [Sprint Board](https://rally1.rallydev.com/#/165079587024ud/teamboard)
 
+### Credential for Instructors
+Username: lele.yogesh@gmail.com
+Password: G0Pack!@#
+
 ## Week 1
 Deliverable | Item/Status | Issues/Tasks
 ---|---|---
@@ -38,3 +42,14 @@ Mocking | Mock REST API call | [#DE10](https://rally1.rallydev.com/#/16507958702
 Mocking | Provide the list of team members, their quota, and stories | [#US11](https://rally1.rallydev.com/#/165079587024d/detail/userstory/166072465984)
 Mocking | List of Git Commits | [#US12](https://rally1.rallydev.com/#/165079587024d/detail/userstory/165498115104)
 Testing | Selenium Scripting | [#US17](https://rally1.rallydev.com/#/165079587024d/detail/userstory/167023725292)
+
+
+
+## Week 4
+Deliverable | Item/Status | Issues/Tasks
+---|---|---
+Use Case Implementation | Plan Sprint | [#US1](https://trello.com/c/oIOYzxUH/1-implement-use-case-plan-sprint)
+Use Case Implementation | Give My Status | [#US2](https://trello.com/c/oIOYzxUH/1-implement-use-case-plan-sprint)
+Use Case Implementation | Groom Backlog | [#US3](https://trello.com/c/LSmkvZso/2-implement-use-case-groom-backlog)
+Service Implementation | Mapping of Slack ID to User's details | [#US4](https://trello.com/c/uN773Dkc/5-prepare-screen-cast-for-service-milestone)
+Service Milestone | Screencast | [#US5](https://trello.com/c/uN773Dkc/5-prepare-screen-cast-for-service-milestone) 
