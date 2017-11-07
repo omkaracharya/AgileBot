@@ -12,7 +12,8 @@ def connect():
     user = get_env("RALLY_USER")
     password = get_env("RALLY_PASSWORD")
     apikey = get_env("RALLY_APIKEY")
-    rally = Rally(server, user, password, apikey)
+    project = get_env("RALLY_PROJECT") or 'default'
+    rally = Rally(server, user, password, apikey,project=project)
     return rally
 
 
