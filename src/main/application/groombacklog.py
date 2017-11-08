@@ -11,11 +11,10 @@ class GroomBacklog:
     def __init__(self):
         self.date = datetime.today()
         self.command = GROOMBACKLOG
-        self.RESPONSE_HEADER = "Groomed Backlog:"
+        self.RESPONSE_HEADER = "Tentatively Groomed Backlog:"
         self.INVALID_RESPONSE = "\nNo stories in backlog to groom."
 
     def get_response(self, user, all_users, request, rally):
-        # TODO: Implement service/ read from mock file
         if request:
             date = request[0]
             try:
@@ -31,16 +30,22 @@ class GroomBacklog:
             stories = [story for story in backlog]
             perform_action(stories)
             response += '\n' + '\n'.join(
-                ['Story #' + story.FormattedID + ': ' + story.Name + ' (Points: ' + str(story.PlanEstimate) + ')' for
-                 story in
-                 stories])
+                ['Story #' + story.FormattedID + ': ' + story.Name +
+                 ' (Points: ' + str(story.PlanEstimate) + ')'
+                 for story in stories])
         else:
             response += self.INVALID_RESPONSE
         return response
 
-    # TODO : business logic to assign points
+
     def groom(self, stories):
         import random
+        # stories.sort(key=lambda x: x.CreationDate)
+        stories.sort(key=lambda x: x.Expedite, reverse=True)
         for story in stories:
-            # print (story.details())
-            story.PlanEstimate = random.choice([1,2,3,5,8,13,21])
+            print('Story Name: ' + (story.Name) +
+                ' | Related Tasks Count: ' + self.get_count(story.Tasks) +
+                ' | Children Count: ' + self.get_count(story.Children))
+
+    def get_count(self, obj):
+        return str(len(obj) if obj else 0)
