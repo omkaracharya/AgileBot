@@ -25,18 +25,18 @@ class User:
 
 # @patch('pyral.Rally')
 # def test_rally_get_workspace(mock_rally):
-#     set_env('../../environment_variables.txt')
+#     set_env()
 #     rally = None
 #     rally = ralley_service.connect(rally)
 #     ralley_service.get_projects(rally)
 
 def test_get_stories():
-    set_env('../../environment_variables.txt')
+    set_env()
     ralley_service.get_ungroomed_stories(None)
 
 
 def test_get_commits_with_valid_date():
-    set_env('../../environment_variables.txt')
+    set_env()
     user = 'kpohe'
     strdate = '11/11/2017'
     date = datetime.strptime(strdate, "%m/%d/%Y")
@@ -44,7 +44,7 @@ def test_get_commits_with_valid_date():
 
 
 def test_get_commits_with_unauthorized_date():
-    set_env('../../environment_variables.txt')
+    set_env()
     user = 'kobi'
     strdate = '02/28/2000'
     date = datetime.strptime(strdate, "%m/%d/%Y")
