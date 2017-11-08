@@ -23,14 +23,6 @@ class User:
         self.Role = role
 
 
-@patch('pyral.Rally')
-def test_rally_get_users(mock_rally):
-    user1 = User(1, "klal", "Kishan Lal", "Boss")
-    user2 = User(2, "vkhanna", "Vinod Khanna", "Sheth")
-    mock_rally.getAllUsers.return_value = [user1, user2]
-    ralley_service.get_users(mock_rally)
-
-
 # @patch('pyral.Rally')
 # def test_rally_get_workspace(mock_rally):
 #     set_env('../../environment_variables.txt')
@@ -48,7 +40,7 @@ def test_get_commits_with_valid_date():
     user = 'kpohe'
     strdate = '11/11/2017'
     date = datetime.strptime(strdate, "%m/%d/%Y")
-    assert_true(github.get_commits(user, date) != None)
+    assert_true(github.get_commits(user, "", date, "") != None)
 
 
 def test_get_commits_with_unauthorized_date():
@@ -58,4 +50,4 @@ def test_get_commits_with_unauthorized_date():
     date = datetime.strptime(strdate, "%m/%d/%Y")
     from main.application.authority import should_mock
     if should_mock() == True:
-        assert_true(github.get_commits(user, date) == None)
+        assert_true(github.get_commits(user,"", date, "") == None)
