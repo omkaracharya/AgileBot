@@ -49,7 +49,7 @@ Testing | Selenium Scripting | [#US17](https://rally1.rallydev.com/#/16507958702
 Deliverable | Item/Status | Issues/Tasks
 ---|---|---
 Use Case Implementation | Plan Sprint | [#US1](https://trello.com/c/oIOYzxUH/1-implement-use-case-plan-sprint)
-Use Case Implementation | Give My Status | [#US2](https://trello.com/c/oIOYzxUH/1-implement-use-case-plan-sprint)
+Use Case Implementation | Give My Status | [#US2](https://trello.com/c/oIOYzxUH/https://trello.com/c/pKZ1wvvg/3-implement-use-case-give-my-status)
 Use Case Implementation | Groom Backlog | [#US3](https://trello.com/c/LSmkvZso/2-implement-use-case-groom-backlog)
 Service Implementation | Mapping of Slack ID to User's details | [#US4](https://trello.com/c/uN773Dkc/5-prepare-screen-cast-for-service-milestone)
 Service Milestone | Screencast | [#US5](https://trello.com/c/uN773Dkc/5-prepare-screen-cast-for-service-milestone) 
