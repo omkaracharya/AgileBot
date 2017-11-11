@@ -2,6 +2,8 @@
 
 import json
 import os
+from collections import namedtuple
+from types import SimpleNamespace as Namespace
 
 from main.data.commands import PLANSPRINT, GIVEMYSTATUS, GROOMBACKLOG
 from main.data.environment import get_env
@@ -39,8 +41,13 @@ def fake_plan(story):
         story.Owner.DisplayName = 'yvlele'
 
 
-def fake_groom(story):
-    story.PlanEstimate = int(story.FormattedID[-1])
+def fake_groom(stories):
+    import random
+    # stories = sorted(stories, key=lambda x: x.Expedite, reverse=True)
+    stories.sort(key = lambda x: x.Expedite, reverse=True)
+    for story in stories:
+        print(story.FormattedID)
+        story.PlanEstimate = random.choice([1, 2, 3, 5, 8, 13, 21])
 
 
 def fake_give():
@@ -67,12 +74,21 @@ class FakeRally:
     """
 
     def get(self, *args, **kwargs):
+        fetch = kwargs['fetch'] and kwargs['fetch'] is True
         mock_data_repo = {'FormattedID,Name,PlanEstimate,Owner': '../data/mock/sprint_plan.json',
                           'FormattedID,Name,PlanEstimate': '../data/mock/backlog_stories.json'}
 
-        file_path = mock_data_repo[kwargs['fetch']]
+        if not fetch:
+            file_path = mock_data_repo[kwargs['fetch']]
+        else:
+            file_path = '../data/mock/backlog_stories.json'
+
         with open(os.path.join(os.path.dirname(__file__), file_path)) as f:
-            stories = json.load(f)
+            stories = json.load(f, object_hook=lambda d: Namespace(**d))
+
+        if fetch:
+            return stories
+
         return [FakeRallyRESTResponse(story['FormattedID'],
                                       story['Name'],
                                       story['PlanEstimate'],
