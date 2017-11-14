@@ -1,11 +1,12 @@
+import json
+import os
+import urllib
+from datetime import datetime, timedelta
+
+import pytz
+
 from main.application.authority import is_authorized_date, should_mock
 from main.data.environment import get_env
-import os
-import json
-from datetime import datetime, timedelta
-import urllib
-from dateutil import tz
-import pytz
 
 
 class VCSFactory:

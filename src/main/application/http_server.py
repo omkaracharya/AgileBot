@@ -1,7 +1,12 @@
-from flask import Flask, request, make_response, Response
-from urllib.parse import unquote_plus
-import re
 import json
+import re
+from urllib.parse import unquote_plus
+
+from flask import Flask, request
+from slackclient.client import SlackClient
+
+from main.data.environment import get_env
+from main.service.slack import get_slackclient
 
 app = Flask(__name__)
 
@@ -21,54 +26,20 @@ def parse_request(request):
 def post_slack():
     payload = parse_request(request)
     print(payload)
-    if payload['actions'][0]['value'] == 'yes':
-        slack_client.api_call(
+    slack_client = get_slackclient()
+    channel = payload['channel']['id']
+    if payload['actions'][0]['name'] == 'yes':
+        print(slack_client.api_call(
             "chat.postMessage",
-            channel="@omkar.acharya",
-            text="Thanks! Your sprint has been planned!",
+            channel=channel,
+            text=payload['actions'][0]['value'],
             as_user=True
-        )
-        #        confirm()
-
-        return "Done!!!"
+        ))
+        return "Done!"
     else:
-        slack_client.api_call(
-            "chat.postEphemeral",
-            channel="@omkar.acharya",
-            text="I will get back to you!!",
-            as_user=True
-        )
-        return "Hold your horses!"
-
-
-def confirm():
-    # Post a message to a channel, asking users if they want to play a game
-    attachments_json = [
-        {
-            "title": "Plan Sprint for 11/06/2017",
-            "callback_id": "123",
-            "attachment_type": "default",
-            "actions": [
-                {
-                    "name": "yes",
-                    "text": "Yes",
-                    "value": "yes",
-                    "type": "button",
-                },
-                {
-                    "name": "no",
-                    "text": "No",
-                    "value": "no",
-                    "type": "button",
-                }
-            ]
-        }
-    ]
-
-    slack_client.api_call(
-        "chat.postMessage",
-        channel="@omkar.acharya",
-        text="Does this look good?",
-        attachments=attachments_json,
-        as_user=True
-    )
+        print((SlackClient(get_env("SLACK_TOKEN")).api_call(
+            "chat.delete",
+            channel=channel,
+            ts=payload['actions'][0]['value'],
+        )))
+        return "No problem, let me know if you need anything else."

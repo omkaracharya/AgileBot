@@ -1,15 +1,15 @@
 # The main application that runs the agilebot.
-import os
 import time
+from threading import Thread
 
 from main.application.action_builder import ActionBuilder, get_usage
 from main.application.agilefactory import get_instance
+from main.application.http_server import app
 from main.data.bot import Bot
-from main.data.environment import set_env
+from main.data.environment import set_env, get_env
+from main.data.user import User
 from main.data.validator import is_valid_bot, validate_message, is_valid_user
 from main.service.slack import get_slackclient, get_bot_credentials
-from main.data.user import User
-from main.application.http_server import app
 
 READ_WEBSOCKET_DELAY = 1
 
@@ -28,18 +28,20 @@ def get_messages(slack_rtm_output, bot_address):
         # Parse command and channel
         for message in messages:
             if message and 'text' in message and bot_address in message['text']:
+                print(message)
                 channel = message['channel']
                 user = message['user']
                 text = message['text']
+                ts = message['ts']
                 message = text.split(bot_address)[1].strip()
-                return channel, user, message
-    return None, None, None
+                return channel, user, message, ts
+    return None, None, None, None
 
 
 def execute_bot(slack_client, rally, agilebot, all_users):
     # Always stay active
     while True:
-        channel, user, message = get_messages(slack_client.rtm_read(), agilebot.address)
+        channel, user, message, ts = get_messages(slack_client.rtm_read(), agilebot.address)
         if channel and user and message:
             command, request = validate_message(message)
             if command:
@@ -47,15 +49,48 @@ def execute_bot(slack_client, rally, agilebot, all_users):
                 action = ActionBuilder.build(command)
                 response = action.get_response(user, all_users, request, rally)
                 user_name = "<@" + user + "> "
-                response = user_name + response
+                # response = user_name + response
 
                 # TODO - Use interactive Slack message buttons
                 # TODO - Use ephemeral messages depending on the command
-                # slack_client.api_call("chat.postEphemeral", channel=channel, text=response, as_user=True, user="U6WJKJEUD")
+                confirm(slack_client, user, channel, response, action.SUCCESS_RESPONSE + '\n' + response, ts)
             else:
                 response = get_usage()
-            slack_client.api_call("chat.postMessage", channel=channel, text=response, as_user=True)
+                slack_client.api_call("chat.postMessage", channel=channel, text=response, as_user=True)
         time.sleep(READ_WEBSOCKET_DELAY)
+
+
+def confirm(slack_client, user, channel, response, success_response, ts):
+    attachments_json = [
+        {
+            "title": "Does this look good?",
+            "callback_id": "123",
+            "attachment_type": "default",
+            "actions": [
+                {
+                    "name": "yes",
+                    "text": "Yes",
+                    "value": success_response,
+                    "type": "button",
+                },
+                {
+                    "name": "no",
+                    "text": "No",
+                    "value": ts,
+                    "type": "button",
+                }
+            ]
+        }
+    ]
+
+    slack_client.api_call(
+        "chat.postEphemeral",
+        user=user,
+        channel=channel,
+        text=response,
+        attachments=attachments_json,
+        as_user=True
+    )
 
 
 def run():
@@ -67,7 +102,10 @@ def run():
         # Create a Bot object
         agilebot = Bot(bot_id, bot_token, bot_name)
         slack_client = get_slackclient()
-        # app.run(host='0.0.0.0', port=4500)
+        flask_server = Thread(target=app.run, kwargs={"host": "0.0.0.0", "port": get_env("FLASK_PORT")})
+        flask_server.daemon = True
+        flask_server.start()
+        # app.run(host='0.0.0.0', port=get_env("FLASK_PORT"))
         if slack_client.rtm_connect():
             print("'" + agilebot.name + "' is active on Slack..")
             rally = get_instance()

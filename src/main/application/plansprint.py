@@ -10,8 +10,9 @@ from main.service.rally import get_stories_for_sprint, get_user_capacities_for_i
 class PlanSprint:
     def __init__(self):
         self.command = PLANSPRINT
-        self.RESPONSE_HEADER = "Tentative Sprint Plan for "
+        self.RESPONSE_HEADER = "Sprint Plan for "
         self.INVALID_RESPONSE = "\nNo stories in sprint to plan."
+        self.SUCCESS_RESPONSE = "Your sprint has been planned!"
 
     # Assigns story to the least developer with enough capacity and least relative load
     def plan(self, iteration, stories):
@@ -24,9 +25,8 @@ class PlanSprint:
                     if user_capacity.Capacity - user_capacity.TaskEstimates >= story.PlanEstimate:
                         story.Owner = user_capacities[0].User
                         user_capacities[0].TaskEstimates += story.PlanEstimate
-
-        # Uncomment after feedback from interactive buttons
-        # update_story_assignment(stories)
+                        # Uncomment after feedback from interactive buttons
+                        # update_story_assignment(stories)
 
     def get_response(self, user, all_users, request, rally):
         parse_date = None
