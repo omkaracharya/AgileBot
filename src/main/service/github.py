@@ -25,8 +25,8 @@ class GitRepository:
         self.branches_request_url = "https://github.ncsu.edu/api/v3/repos/{owner}/{repo}/branches"
         self.commits_filter = "?since={start_date}&until={end_date}&author={author}&sha={sha}"
         self.commits_sha = set()
-        self.repo_author = "oachary"
-        self.repo_name = "AgileBotTest"
+        self.repo_author = get_env("REPO_AUTHOR")
+        self.repo_name = get_env("REPO_NAME")
         self.token = get_env("GITHUB_TOKEN")
 
     def get_commits(self, user, email, date, tz):
