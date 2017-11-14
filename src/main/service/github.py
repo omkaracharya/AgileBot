@@ -21,29 +21,52 @@ class VCSFactory:
 
 class GitRepository:
     def __init__(self):
-        self.url = "https://github.ncsu.edu/api/v3/repos/{}/{}/commits"
-        self.filter = "?since={}&until={}&author={}"
+        self.commits_request_url = "https://github.ncsu.edu/api/v3/repos/{owner}/{repo}/commits"
+        self.branches_request_url = "https://github.ncsu.edu/api/v3/repos/{owner}/{repo}/branches"
+        self.commits_filter = "?since={start_date}&until={end_date}&author={author}&sha={sha}"
+        self.commits_sha = set()
+        self.repo_author = get_env("REPO_AUTHOR")
+        self.repo_name = get_env("REPO_NAME")
+        self.token = get_env("GITHUB_TOKEN")
 
     def get_commits(self, user, email, date, tz):
-        repo_author = "oachary"
-        repo_name = "AgileBotTest"
-        TOKEN = get_env("GITHUB_TOKEN")
-
+        all_commits = list()
+        branches = self.get_branches()
         # Start date - yesterday's 12:00 am
         since = (date - timedelta(days=1)).replace(hour=0, minute=0, second=0).isoformat()
         # End date - today's 11:59 pm
         until = date.replace(hour=23, minute=59, second=59).isoformat()
-        # GitHub REST API call
-        request = urllib.request.Request((self.url + self
-                                          .filter).format(repo_author, repo_name, since, until, email))
-        # Add GitHub's authorization token
-        request.add_header("Authorization", "token {}".format(TOKEN))
-        # Send the request and store the response containing commit details
-        response = urllib.request.urlopen(request)
-        # Extract commits from JSON format
-        commits = json.loads(response.read().decode('utf-8'))
+        # GitHub REST API calls to get commits for each branch
+        for branch in branches:
+            commits_request = urllib.request.Request(
+                (self.commits_request_url + self.commits_filter).format(owner=self.repo_author, repo=self.repo_name,
+                                                                        start_date=since, end_date=until, author=email,
+                                                                        sha=branch["commit"]["sha"]))
+            # Add GitHub's authorization token
+            commits_request.add_header("Authorization", "token {token}".format(token=self.token))
+            # Send the request and store the response containing commit details
+            response = urllib.request.urlopen(commits_request)
+            # Extract commits from JSON format
+            commits = json.loads(response.read().decode('utf-8'))
+            for commit in commits:
+                if commit["sha"] not in self.commits_sha:
+                    all_commits.append(format_commit(commit, branch["name"], tz))
+                    self.commits_sha.add(commit["sha"])
         # Return commits to the slack channel
-        return format_commits(commits, tz)
+        return all_commits
+
+    def get_branches(self):
+        # GitHub REST API call
+        branches_request = urllib.request.Request(self.branches_request_url.format(owner=self.repo_author,
+                                                                                   repo=self.repo_name))
+        # Add GitHub's authorization token
+        branches_request.add_header("Authorization", "token {token}".format(token=self.token))
+        # Send the request and store the response containing branches and their details
+        response = urllib.request.urlopen(branches_request)
+        # Extract repos from JSON format
+        branches = json.loads(response.read().decode('utf-8'))
+        # Return branches
+        return branches
 
 
 class FakeGitRepository:
@@ -51,7 +74,7 @@ class FakeGitRepository:
         file_path = "../data/mock/git_commits.json"
         with open(os.path.join(os.path.dirname(__file__), file_path)) as f:
             commits = json.load(f)
-        return format_commits(commits)
+        return format_commit(commits)
 
 
 def get_commits(user, email, date, tz):
@@ -62,10 +85,8 @@ def get_commits(user, email, date, tz):
     return github.get_commits(user, email, date, tz)
 
 
-def format_commits(commits, tz):
-    dt_commits = []
-    for commit in commits:
-        dt = pytz.utc.localize(datetime.strptime(commit["commit"]["committer"]["date"], "%Y-%m-%dT%H:%M:%SZ"))
-        local_dt = dt.astimezone(pytz.timezone(tz))
-        dt_commits.append((local_dt.strftime("%m/%d/%Y %H:%M:%S"), commit["commit"]["message"]))
-    return dt_commits
+def format_commit(commit, branch, tz):
+    dt = pytz.utc.localize(datetime.strptime(commit["commit"]["committer"]["date"], "%Y-%m-%dT%H:%M:%SZ"))
+    local_dt = dt.astimezone(pytz.timezone(tz))
+    return (local_dt.strftime("%m/%d/%Y %H:%M:%S"),
+            "<" + commit["html_url"] + "|" + commit["commit"]["message"] + "> `(" + branch + ")`")
