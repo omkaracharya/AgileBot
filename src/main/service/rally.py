@@ -89,3 +89,11 @@ def update_story_assignment(stories):
     for story in stories:
         if story.Owner:
             rally.post('UserStory', {'ObjectID': story.oid, 'Owner': story.Owner.oid})
+
+
+def update_story_points(stories):
+    rally = get_instance()
+    for story in stories:
+        rally.post('UserStory',
+                   {'ObjectID': story.oid,
+                    'PlanEstimate': story.PlanEstimate})
