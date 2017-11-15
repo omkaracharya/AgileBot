@@ -42,7 +42,7 @@ class PlanSprint:
         if is_authorized_date(start_date) and iteration and stories:
             perform_action(iteration, stories)
 
-            response += '\n' + '\n'.join(['Story #' + story.FormattedID + ': '
+            response += "\n " + "\n ".join(['Story #' + story.FormattedID + ': '
                                           + story.Name + ' (Proposed Assignee: ' + (str(
                 story.Owner.DisplayName) if story.Owner else 'None')
                                           + ' Points = ' + str(story.PlanEstimate) + ')'

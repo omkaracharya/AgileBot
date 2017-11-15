@@ -17,6 +17,7 @@ class GroomBacklog:
         self.PER_USER_QUOTA = 13
         self.STORY_BASE_POINTS = 5
         self.TASK_BASE_POINTS = 3
+        self.SUCCESS_RESPONSE = "Your backlog has been groomed!"
 
     def get_response(self, user, all_users, request, rally):
         if request:
@@ -34,7 +35,7 @@ class GroomBacklog:
             stories = [story for story in backlog]
             sprint_quota = len(all_users) * self.PER_USER_QUOTA
             perform_action(stories, sprint_quota)
-            response += '\n' + '\n'.join(
+            response += '\n ' + '\n '.join(
                 ['Story #' + story.FormattedID + ': ' + story.Name +
                  ' (Points: ' + str(story.PlanEstimate) + ')'
                  for story in stories])
