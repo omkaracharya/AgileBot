@@ -1,9 +1,9 @@
 class User:
-    def __init__(self, slack_id, email, tz):
+    def __init__(self, slack_id, email, tz, rally_id):
         self.slack_id = slack_id
         self.email = email
         self.tz = tz
-        self.rally_id = None
+        self.rally_id = rally_id
 
     def get_slack_id(self):
         return self.slack_id

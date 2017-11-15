@@ -3,12 +3,12 @@ import time
 from threading import Thread
 
 from main.application.action_builder import ActionBuilder, get_usage
-from main.application.agilefactory import get_instance
 from main.application.http_server import app
 from main.data.bot import Bot
 from main.data.environment import set_env, get_env
 from main.data.user import User
 from main.data.validator import is_valid_bot, validate_message, is_valid_user
+from main.service.rally import get_user_info_from_email
 from main.service.slack import get_slackclient, get_bot_credentials
 
 READ_WEBSOCKET_DELAY = 1
@@ -38,7 +38,7 @@ def get_messages(slack_rtm_output, bot_address):
     return None, None, None, None
 
 
-def execute_bot(slack_client, rally, agilebot, all_users):
+def execute_bot(slack_client, agilebot, all_users):
     # Always stay active
     while True:
         channel, user, message, ts = get_messages(slack_client.rtm_read(), agilebot.address)
@@ -47,7 +47,7 @@ def execute_bot(slack_client, rally, agilebot, all_users):
             if command:
                 # Response to the user
                 action = ActionBuilder.build(command)
-                response = action.get_response(user, all_users, request, rally)
+                response = action.get_response(user, all_users, request)
                 user_name = "<@" + user + "> "
                 # response = user_name + response
 
@@ -117,14 +117,13 @@ def run():
         # app.run(host='0.0.0.0', port=get_env("FLASK_PORT"))
         if slack_client.rtm_connect():
             print("'" + agilebot.name + "' is active on Slack..")
-            rally = get_instance()
-            all_users = get_user_data(slack_client, rally)
-            execute_bot(slack_client, rally, agilebot, all_users)
+            all_users = get_user_data(slack_client)
+            execute_bot(slack_client, agilebot, all_users)
         else:
             print("Connection failed..")
 
 
-def get_user_data(slack_client, rally):
+def get_user_data(slack_client):
     # Populate User Data
     all_users = list()
     user_list = slack_client.api_call("users.list")
@@ -133,7 +132,8 @@ def get_user_data(slack_client, rally):
             user_id = user['id']
             user_email = user['profile']['email']
             user_tz = user['tz']
-            all_users.append(User(user_id, user_email, user_tz))
+            rally_id = get_user_info_from_email(user_email)
+            all_users.append(User(user_id, user_email, user_tz, rally_id))
     return all_users
 
 
