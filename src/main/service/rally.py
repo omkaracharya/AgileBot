@@ -41,6 +41,11 @@ def get_user_info(user_oid):
     return rally.getUserInfo(user_oid)
 
 
+def get_story_url(project_id, story_id):
+    return "https://rally1.rallydev.com/#/{project_id}/detail/userstory/{story_id}".format(project_id=project_id,
+                                                                                           story_id=story_id)
+
+
 def get_user_info_from_email(email_id):
     rally = get_instance()
     query = 'EmailAddress = ' + email_id

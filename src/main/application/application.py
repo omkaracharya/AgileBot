@@ -73,13 +73,7 @@ def confirm(slack_client, user, channel, response, command, ts, state):
                     "text": "Sure!",
                     "value": command + ';' + str(state),
                     "type": "button",
-                    "style": "primary",
-                    "confirm": {
-                        "title": "Are you sure?",
-                        "text": "",
-                        "ok_text": "Yes",
-                        "dismiss_text": "No"
-                    }
+                    "style": "primary"
                 },
                 {
                     "name": "no",

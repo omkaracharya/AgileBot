@@ -6,7 +6,7 @@ from main.application.authority import is_authorized_date
 from main.data.commands import PLANSPRINT
 from main.data.validator import get_valid_date
 from main.service.rally import get_stories_for_sprint, get_user_capacities_for_iteration, get_iteration_by_date, \
-    update_story_assignment
+    update_story_assignment, get_story_url
 
 
 class PlanSprint:
@@ -44,13 +44,14 @@ class PlanSprint:
         print(self.states)
         from main.application.application import get_all_users
         users = get_all_users()
-        response = self.SUCCESS_RESPONSE + "\nFinal Sprint Plan:"
-        response += '\n' + '\n'.join(['Story #' + story.FormattedID + ': '
-                                      + story.Name + (' (Assignee: <@' + str(
-            users[
-                story.Owner.EmailAddress].slack_id + '>,') if story.Owner else ' (Cannot Assign! Not enough quota for')
-                                      + ' `Points = ' + str(story.PlanEstimate) + '`)'
-                                      for story in stories])
+        response = self.SUCCESS_RESPONSE + "\n*Final Sprint Plan:*"
+        response += '\n' + '\n'.join(
+            ['Story #<' + get_story_url(story.Project.oid, story.oid) + "|" + story.FormattedID + '>: '
+             + story.Name + (' (*Assignee:* <@' + str(
+                users[
+                    story.Owner.EmailAddress].slack_id + '>,') if story.Owner else ' (_Cannot Assign!_ Not enough quota for')
+             + ' `Points = ' + str(story.PlanEstimate) + '`)'
+             for story in stories])
         return response
 
     def get_response(self, user, all_users, request):
@@ -69,11 +70,12 @@ class PlanSprint:
         if is_authorized_date(start_date) and iteration and stories:
             state = perform_action(iteration, stories)
 
-            response += "\n " + "\n ".join(['Story #' + story.FormattedID + ': '
-                                            + story.Name + ' (Proposed Assignee: ' + ('<@' + str(
-                users[story.Owner.EmailAddress].slack_id + '>,') if story.Owner else 'None,')
-                                            + ' `Points = ' + str(story.PlanEstimate) + '`)'
-                                            for story in stories])
+            response += "\n " + "\n ".join(
+                ['Story #<' + get_story_url(story.Project.oid, story.oid) + "|" + story.FormattedID + '>: '
+                 + story.Name + ' (*Proposed Assignee:* ' + ('<@' + str(
+                    users[story.Owner.EmailAddress].slack_id + '>,') if story.Owner else '_None_,')
+                 + ' `Points = ' + str(story.PlanEstimate) + '`)'
+                 for story in stories])
         else:
             response += self.INVALID_RESPONSE
             state = 0

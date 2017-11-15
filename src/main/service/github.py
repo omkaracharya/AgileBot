@@ -91,5 +91,5 @@ def format_commit(commit, branch, tz):
     local_dt = dt.astimezone(pytz.timezone(tz))
     # return (local_dt.strftime("%m/%d/%Y %H:%M:%S"),
     #          commit["commit"]["message"] + " `(" + branch + ")`")
-    return (local_dt.strftime("%m/%d/%Y %H:%M:%S"),
-            "<" + commit["html_url"] + "|" + commit["commit"]["message"] + "> `(" + branch + ")`")
+    return ("<" + commit["html_url"] + "|" + commit['sha'][:6] + ">",
+            commit["commit"]["message"] + " `(" + branch + ")`")

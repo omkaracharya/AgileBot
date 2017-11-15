@@ -15,7 +15,7 @@ class StatusUpdate:
         self.command = GIVEMYSTATUS
         self.RESPONSE_HEADER = "Here is your status for "
         self.INVALID_RESPONSE = "\nCurrently you have no commits."
-        self.SUCCESS_RESPONSE = "Your status has been posted!"
+        self.SUCCESS_RESPONSE = "<@{slack_id}> worked on:\n"
         self.states = dict()
 
     def get_response(self, user, all_users, request, *args, **kwargs):
@@ -38,11 +38,11 @@ class StatusUpdate:
 
         commits = get_commits(user, user_email, status_date, user_tz)
         if commits:
-            response += "\n " + "\n ".join([" => ".join(commit) for commit in commits])
+            response += "\n " + "\n ".join([": ".join(commit) for commit in commits])
             state = randint(1, 1000000)
             while state in self.states:
                 state = randint(1, 1000000)
-            self.states[state] = commits
+            self.states[state] = (commits, user_email)
         else:
             response += self.INVALID_RESPONSE
             state = 0
@@ -52,10 +52,12 @@ class StatusUpdate:
         print(self.states)
         if not state:
             return self.INVALID_RESPONSE
-        commits = self.states.pop(state)
+        commits, user_email = self.states.pop(state)
         print(self.states)
-        response = self.SUCCESS_RESPONSE
-        response += "\n " + "\n ".join([" => ".join(commit) for commit in commits])
+        from main.application.application import get_all_users
+        all_users = get_all_users()
+        response = self.SUCCESS_RESPONSE.format(slack_id=all_users[user_email].slack_id)
+        response += "\n " + "\n ".join([": ".join(commit) for commit in commits])
         return response
 
     def give(self):
