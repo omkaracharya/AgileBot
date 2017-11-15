@@ -5,6 +5,7 @@ from urllib.parse import unquote_plus
 from flask import Flask, request
 from slackclient.client import SlackClient
 
+from main.application.action_builder import ActionBuilder
 from main.data.environment import get_env
 from main.service.slack import get_slackclient
 
@@ -29,10 +30,16 @@ def post_slack():
     slack_client = get_slackclient()
     channel = payload['channel']['id']
     if payload['actions'][0]['name'] == 'yes':
+        info = payload['actions'][0]['value']
+        info = info.split(';')
+        command = info[0]
+        state = int(info[1])
+        action = ActionBuilder.build(command)
+        response = action.execute(state)
         print(slack_client.api_call(
             "chat.postMessage",
             channel=channel,
-            text=payload['actions'][0]['value'],
+            text=response,
             as_user=True
         ))
         return "Done!"

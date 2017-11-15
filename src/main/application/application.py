@@ -47,20 +47,20 @@ def execute_bot(slack_client, agilebot, all_users):
             if command:
                 # Response to the user
                 action = ActionBuilder.build(command)
-                response = action.get_response(user, all_users, request)
+                response, state = action.get_response(user, all_users, request)
                 user_name = "<@" + user + "> "
                 # response = user_name + response
 
                 # TODO - Use interactive Slack message buttons
                 # TODO - Use ephemeral messages depending on the command
-                confirm(slack_client, user, channel, response, action.SUCCESS_RESPONSE + '\n' + response, ts)
+                confirm(slack_client, user, channel, response, command, ts, state)
             else:
                 response = get_usage()
                 slack_client.api_call("chat.postMessage", channel=channel, text=response, as_user=True)
         time.sleep(READ_WEBSOCKET_DELAY)
 
 
-def confirm(slack_client, user, channel, response, success_response, ts):
+def confirm(slack_client, user, channel, response, command, ts, state):
     attachments_json = [
         {
             "title": "Does this look good?",
@@ -70,7 +70,7 @@ def confirm(slack_client, user, channel, response, success_response, ts):
                 {
                     "name": "yes",
                     "text": "Yes",
-                    "value": success_response,
+                    "value": command + ';' + str(state),
                     "type": "button",
                 },
                 {
