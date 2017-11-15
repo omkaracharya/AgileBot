@@ -1,6 +1,7 @@
 # Use Case: groom backlog
 
 from datetime import datetime
+
 import networkx as nx
 
 from main.application.authority import get_action_authorized
@@ -18,7 +19,7 @@ class GroomBacklog:
         self.STORY_BASE_POINTS = 5
         self.TASK_BASE_POINTS = 3
 
-    def get_response(self, user, all_users, request, rally):
+    def get_response(self, user, all_users, request):
         if request:
             date = request[0]
             try:

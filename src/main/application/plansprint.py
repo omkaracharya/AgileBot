@@ -28,7 +28,7 @@ class PlanSprint:
                         # Uncomment after feedback from interactive buttons
                         # update_story_assignment(stories)
 
-    def get_response(self, user, all_users, request, rally):
+    def get_response(self, user, all_users, request):
         parse_date = None
         if request:
             parse_date = request[0]

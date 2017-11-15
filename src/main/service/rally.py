@@ -41,6 +41,16 @@ def get_user_info(user_oid):
     return rally.getUserInfo(user_oid)
 
 
+def get_user_info_from_email(email_id):
+    rally = get_instance()
+    query = 'EmailAddress = ' + email_id
+    users = rally.get('User', query=query)
+    if users:
+        for user in users:
+            # print(user.details())
+            return user.oid
+
+
 def get_ungroomed_stories(start_date):
     if start_date and is_authorized_date(start_date):
         rally = get_instance()
