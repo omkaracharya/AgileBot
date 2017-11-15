@@ -89,7 +89,7 @@ def get_commits(user, email, date, tz):
 def format_commit(commit, branch, tz):
     dt = pytz.utc.localize(datetime.strptime(commit["commit"]["committer"]["date"], "%Y-%m-%dT%H:%M:%SZ"))
     local_dt = dt.astimezone(pytz.timezone(tz))
-    return (local_dt.strftime("%m/%d/%Y %H:%M:%S"),
-             commit["commit"]["message"] + " `(" + branch + ")`")
     # return (local_dt.strftime("%m/%d/%Y %H:%M:%S"),
-    #         "<" + commit["html_url"] + "|" + commit["commit"]["message"] + "> `(" + branch + ")`")
+    #          commit["commit"]["message"] + " `(" + branch + ")`")
+    return (local_dt.strftime("%m/%d/%Y %H:%M:%S"),
+            "<" + commit["html_url"] + "|" + commit["commit"]["message"] + "> `(" + branch + ")`")

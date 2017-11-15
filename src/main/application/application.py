@@ -63,7 +63,7 @@ def execute_bot(slack_client, agilebot, all_users):
 def confirm(slack_client, user, channel, response, command, ts, state):
     attachments_json = [
         {
-            "text": "Does this plan look good?",
+            "text": "Does this look good?",
             "callback_id": "123",
             "color": "#3AA3E3",
             "attachment_type": "default",
@@ -123,9 +123,18 @@ def run():
             print("Connection failed..")
 
 
+all_users = None
+
+
+def get_all_users():
+    return all_users
+
 def get_user_data(slack_client):
     # Populate User Data
-    all_users = list()
+    global all_users
+    if all_users:
+        return all_users
+    all_users = dict()
     user_list = slack_client.api_call("users.list")
     for user in user_list['members']:
         if is_valid_user(user):
@@ -133,7 +142,7 @@ def get_user_data(slack_client):
             user_email = user['profile']['email']
             user_tz = user['tz']
             rally_id = get_user_info_from_email(user_email)
-            all_users.append(User(user_id, user_email, user_tz, rally_id))
+            all_users[user_email] = User(user_id, user_email, user_tz, rally_id)
     return all_users
 
 
