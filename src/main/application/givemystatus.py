@@ -12,6 +12,7 @@ class StatusUpdate:
         self.command = GIVEMYSTATUS
         self.RESPONSE_HEADER = "Here is your status for "
         self.INVALID_RESPONSE = "\nCurrently you have no commits."
+        self.SUCCESS_RESPONSE = "Your status has been posted!"
 
     def get_response(self, user, all_users, request, *args, **kwargs):
         parse_date = None
@@ -33,7 +34,7 @@ class StatusUpdate:
 
         commits = get_commits(user, user_email, status_date, user_tz)
         if commits:
-            response += "\n" + "\n".join([" => ".join(commit) for commit in commits])
+            response += "\n " + "\n ".join([" => ".join(commit) for commit in commits])
         else:
             response += self.INVALID_RESPONSE
         return response

@@ -19,6 +19,7 @@ def parse_request(request):
     payload = request.get_data()
     payload = unquote_plus(payload.decode('utf-8'))
     payload = re.sub('payload=', '', payload)
+    payload = payload.replace('\\u00a0', '\\n')
     payload = json.loads(payload)
     return payload
 

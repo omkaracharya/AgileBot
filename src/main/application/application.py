@@ -63,21 +63,30 @@ def execute_bot(slack_client, agilebot, all_users):
 def confirm(slack_client, user, channel, response, command, ts, state):
     attachments_json = [
         {
-            "title": "Does this look good?",
+            "text": "Does this plan look good?",
             "callback_id": "123",
+            "color": "#3AA3E3",
             "attachment_type": "default",
             "actions": [
                 {
                     "name": "yes",
-                    "text": "Yes",
+                    "text": "Sure!",
                     "value": command + ';' + str(state),
                     "type": "button",
+                    "style": "primary",
+                    "confirm": {
+                        "title": "Are you sure?",
+                        "text": "",
+                        "ok_text": "Yes",
+                        "dismiss_text": "No"
+                    }
                 },
                 {
                     "name": "no",
-                    "text": "No",
-                    "value": ts,
+                    "text": "No! I have something else in mind",
+                    "style": "danger",
                     "type": "button",
+                    "value": ts
                 }
             ]
         }
