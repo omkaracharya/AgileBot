@@ -1,12 +1,13 @@
 # Use Case: groom backlog
 
 from datetime import datetime
+from random import randint
 
 import networkx as nx
 
 from main.application.authority import get_action_authorized
 from main.data.commands import GROOMBACKLOG
-from main.service.rally import get_ungroomed_stories
+from main.service.rally import get_ungroomed_stories, update_story_points
 
 
 class GroomBacklog:
@@ -19,6 +20,7 @@ class GroomBacklog:
         self.STORY_BASE_POINTS = 5
         self.TASK_BASE_POINTS = 3
         self.SUCCESS_RESPONSE = "Your backlog has been groomed!"
+        self.states = dict()
 
     def get_response(self, user, all_users, request):
         if request:
@@ -32,17 +34,21 @@ class GroomBacklog:
         backlog = get_ungroomed_stories(self.date)
         perform_action = get_action_authorized(self, self.groom)
 
+        stories = None
         if backlog:
             stories = [story for story in backlog]
+
+        if stories and len(stories) > 0:
             sprint_quota = len(all_users) * self.PER_USER_QUOTA
-            perform_action(stories, sprint_quota)
+            state = perform_action(stories, sprint_quota)
             response += '\n ' + '\n '.join(
                 ['Story #' + story.FormattedID + ': ' + story.Name +
                  ' (Points: ' + str(story.PlanEstimate) + ')'
                  for story in stories])
         else:
             response += self.INVALID_RESPONSE
-        return response
+            state = 0
+        return response, state
 
 
     def groom(self, stories, quota_left):
@@ -67,8 +73,29 @@ class GroomBacklog:
 
         quota_left = self.assign_points_wrapper(quota_left, tp_sorted_stories)
         quota_left = self.assign_points_wrapper(quota_left, independentStories)
-        return quota_left
 
+        state = randint(1, 1000000)
+        while state in self.states:
+            state = randint(1, 1000000)
+        self.states[state] = stories
+        return state
+
+
+    def execute(self, state):
+        if not state:
+            return self.INVALID_RESPONSE
+        print(self.states)
+        stories = self.states.pop(state)
+        print("Performed action = Groom Backlog!")
+        update_story_points(stories)
+        print(self.states)
+
+        response = self.SUCCESS_RESPONSE + "\nFinal Point assignment: "
+        response += '\n' + '\n'.join(['Story #' + story.FormattedID + ': '
+                                      + story.Name
+                                      + ' `Points = ' + str(story.PlanEstimate) + '`'
+                                      for story in stories])
+        return response
 
     def assign_points_wrapper(self, quota_left, sorted_stories):
         for sorted_story in sorted_stories:
@@ -119,4 +146,4 @@ class GroomBacklog:
             story.PlanEstimate = estimated_points
             quota_left -= estimated_points
 
-        return estimated_points,quota_left
+        return estimated_points, quota_left
