@@ -1,22 +1,36 @@
-- hosts: nodes
+- hosts: localhost
   become: yes
 
   tasks:
-    - name: 'Install docker'
-      yum:
-        name: docker
-        update_cache: yes
+    - name: 'Install docker on Ubuntu/Debian Platform'
+      apt: 
+        name: docker-engine 
         state: present
+      when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+    
+    - name: 'Install docker on Redhat/CentOS Platform'
+      yum: 
+        name: docker 
+        state: present
+      when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
 
     - name: 'start docker service if not running'
       service:
         name: docker
         state: started
+        enabled: yes
 
-    - name: 'Install pip'
-      yum:
-        name: python-pip
+    - name: 'Install pip on Ubuntu/Debian Platform'
+      apt: 
+        name: python-pip 
         state: present
+      when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+    
+    - name: 'Install pip on Redhat/CentOS Platform'
+      yum: 
+        name: python-pip 
+        state: present
+      when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
 
     - name: 'Install docker-py'
       pip:
