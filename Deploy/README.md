@@ -48,7 +48,7 @@ b. start the vm
    ansible all -m ping -i inventory 
 ```
 
-6. Run the anisble playbook 
+7. Run the anisble playbook 
 
 ```
    ansible-playbook -i inventory ansible/ansible.yaml
