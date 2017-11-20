@@ -1,0 +1,16 @@
+FROM python:3.5
+
+# install the dependencies
+RUN pip3 install networkx pyral pytz flask slackclient
+
+# create the directory structure
+RUN mkdir -p /agileBot/src/
+
+# copy the source code
+COPY ./src /agileBot/src/
+
+# make the /agileBot/src as working directory
+WORKDIR /agileBot/src/
+
+# run the bot
+CMD ["python3", "run.py"]
