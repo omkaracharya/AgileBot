@@ -40,7 +40,7 @@
     - name: 'Add iptable rule for port 4500'
       shell: iptables -I INPUT -p tcp --dport 4500 -j ACCEPT
 
-    - name: Restart a container
+    - name: 'Restart a container'
       docker_container:
         name: AgileBot
         image: jsingh8/agilebot:firsttry
