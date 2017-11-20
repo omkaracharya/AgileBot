@@ -4,7 +4,7 @@ To run the agile bot, please follow the below mentioned steps.
 
 1. Install the vagrant to create the virtual machine. (follow these instructions [install](https://github.com/CSC-DevOps/CM/blob/master/VM.md)).  
 
-**Note:** If you already have host machine then please directly jump to step 4.  
+    **Note:** If you already have host machine then please directly jump to step 4.  
 
 2. Please reserve a virtual machine with ubuntu base image. 
 
