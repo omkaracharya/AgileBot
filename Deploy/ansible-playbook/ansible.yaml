@@ -1,0 +1,34 @@
+- hosts: nodes
+  become: yes
+
+  tasks:
+    - name: 'Install docker'
+      yum:
+        name: docker
+        update_cache: yes
+        state: present
+
+    - name: 'start docker service if not running'
+      service:
+        name: docker
+        state: started
+
+    - name: 'Install pip'
+      yum:
+        name: python-pip
+        state: present
+
+    - name: 'Install docker-py'
+      pip:
+        name: docker-py
+        state: present
+
+    - name: 'Add iptable rule for port 4500'
+      shell: iptables -I INPUT -p tcp --dport 4500 -j ACCEPT
+
+    - name: Restart a container
+      docker_container:
+        name: AgileBot
+        image: jsingh8/agilebot:firsttry
+        state: started
+        restart: yes
