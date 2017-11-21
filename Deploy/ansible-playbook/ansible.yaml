@@ -1,34 +1,85 @@
-- hosts: nodes
+- hosts: localhost
   become: yes
-
   tasks:
+    # Ansible script is using few modules which requires ubuntu os version >= 16.04.
+    - fail:
+        msg: "Current ubuntu os version is lower than 16.00. Please install higher version to proceed."
+      when: (ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu') and ansible_distribution_major_version < 16 
+
+    # Ansible script is using few modules which requires redhat/centos os version >= 7.00.
+    - fail:
+        msg: "Current ubuntu os version is lower than 16.00. Please install higher version to proceed."
+      when: (ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux') and ansible_distribution_major_version < 7 
+
+    # Add docker repo for ubuntu platform.
+    - name: add docker repo
+      apt_repository:
+        repo="deb https://download.docker.com/linux/ubuntu xenial stable"
+        state=present
+      when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+
+    # Add docker repo gpg key for ubuntu platform.
+    - name: install docker-ce repo gpg key
+      apt_key:
+        url="https://download.docker.com/linux/ubuntu/gpg"
+        state=present
+      when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+
+    # check docker pkg is already installed for ubuntu platform.
+    - name: check if docker-ce is installed. 
+      command: dpkg-query -l docker-ce
+      register: deb_check
+      when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+
+    # Install docker for ubuntu platform.
+    - name: Refresh cache and install docker-ce
+      apt:
+        name=docker-ce
+        update_cache=yes
+        state=present
+      when: (ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu') and deb_check.stdout.find('no packages found') != -1
+
+    # Install docker for Redhat/Centos platform.
     - name: 'Install docker'
       yum:
         name: docker
-        update_cache: yes
         state: present
+      when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
 
+    # start the docker service
     - name: 'start docker service if not running'
       service:
         name: docker
         state: started
+        enabled: yes
 
-    - name: 'Install pip'
+    # Install pyton-pip
+    - name: 'Install python-pip'
+      apt:
+        name: python-pip
+        state: present
+      when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+                                                                                    
+    # Install pyton-pip
+    - name: 'Install python-pip'
       yum:
         name: python-pip
         state: present
+      when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
 
-    - name: 'Install docker-py'
+    # Install docker-py
+    - name: 'Install docker-py ansible module'
       pip:
         name: docker-py
         state: present
 
-    - name: 'Add iptable rule for port 4500'
+    # Add iptable rule to allow tcp traffic having port: 4500 
+    - name: 'Add iptable rule to allow tcp traffic having port: 4500'
       shell: iptables -I INPUT -p tcp --dport 4500 -j ACCEPT
 
-    - name: 'Restart a container'
-      docker_container:
+    # restart a container
+    - name: Restart a container
+      docker:
         name: AgileBot
         image: jsingh8/agilebot:firsttry
         state: started
-        restart: yes
