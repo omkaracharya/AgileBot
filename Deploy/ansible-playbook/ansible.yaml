@@ -83,7 +83,7 @@
     - name: Restart a container
       docker:
         name: AgileBot
-        image: jsingh8/agilebot:firsttry
+        image: jsingh8/agilebot:latest
         state: started
         env_file: env.conf
                           
