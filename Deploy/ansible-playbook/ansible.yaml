@@ -85,3 +85,5 @@
         name: AgileBot
         image: jsingh8/agilebot:firsttry
         state: started
+        env_file: env.conf
+                          
