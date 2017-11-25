@@ -53,3 +53,10 @@ Use Case Implementation | Give My Status | [#US2](https://trello.com/c/oIOYzxUH/
 Use Case Implementation | Groom Backlog | [#US3](https://trello.com/c/LSmkvZso/2-implement-use-case-groom-backlog)
 Service Implementation | Mapping of Slack ID to User's details | [#US4](https://trello.com/c/uN773Dkc/5-prepare-screen-cast-for-service-milestone)
 Service Milestone | Screencast | [#US5](https://trello.com/c/uN773Dkc/5-prepare-screen-cast-for-service-milestone) 
+
+## Week 5
+Deliverable | Item/Status | Issues/Tasks
+---|---|---
+Deploy Milestone | Deployment Strategy | [#US8](https://trello.com/c/MNWcRq0W/7-figure-out-deployment-strategy)
+Deploy Milestone | Ansible Script | [#US9](https://trello.com/c/29I3jo9K/8-write-ansible-script-for-deployment)
+Deploy Milestone | Docker Image | [#US10](https://trello.com/c/HFIht6ze/9-create-a-docker-image)
