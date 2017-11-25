@@ -53,3 +53,16 @@ b. start the vm
 ```
    ansible-playbook -i inventory ansible/ansible.yaml
 ```
+
+8. [slack side configuration] Configure the public IP address of Virtual Machine in slack for interactive messages. 
+
+```
+a. open this url https://api.slack.com/apps/A7N5G20GY/interactive-messages?saved=1. 
+b. update the public IP address in the Request URL.
+
+   For ex: if Public IP address of VM is 152.7.99.153 then Request URL should be http://152.7.99.153:4500/slack/message_actions. 
+
+Note: No need to change the port number.
+
+c. Save the changes.
+```
