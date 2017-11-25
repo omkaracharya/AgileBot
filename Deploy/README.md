@@ -48,16 +48,41 @@ b. start the vm
    ansible all -m ping -i inventory 
 ```
 
-7. Run the anisble playbook 
+7. Configure the environment variables in the environment file `ansible/env.conf`.
+
+```
+AGILEBOT_ID=
+AGILEBOT_TOKEN=
+SLACK_TOKEN=
+RALLY_SERVER=rally1.rallydev.com
+RALLY_USERNAME=
+RALLY_PASSWORD=
+RALLY_APIKEY=
+RALLY_PROJECT=AgileBot
+CHROME_DRIVER_PATH=C:/Users/Dexter/.m2/repository/webdriver/chromedriver/win32/2.32/chromedriver.exe
+SLACK_URL=https://csc510project.slack.com/
+TESTER_EMAIL=
+TESTER_PASSWORD=
+MOCK=False
+GITHUB_TOKEN=
+FLASK_PORT=4500
+REPO_NAME=
+REPO_AUTHOR=
+```
+
+Note: We pass this environment file as input file while running docker in ansible. AgileBot reads the value of these environment variable and do certains task like authentication etc.   
+
+8. Run the anisble playbook 
 
 ```
    ansible-playbook -i inventory ansible/ansible.yaml
 ```
 
-8. [slack side configuration] Configure the public IP address of Virtual Machine in slack for interactive messages. 
+9. [slack side configuration] Configure the public IP address of Virtual Machine in slack for interactive messages. 
 
 ```
 a. open this url https://api.slack.com/apps/A7N5G20GY/interactive-messages?saved=1. 
+
 b. update the public IP address in the Request URL.
 
    For ex: if Public IP address of VM is 152.7.99.153 then Request URL should be http://152.7.99.153:4500/slack/message_actions. 
