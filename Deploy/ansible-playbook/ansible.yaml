@@ -1,32 +1,34 @@
-- hosts: localhost
+- hosts: nodes
   become: yes
   tasks:
     # Ansible script is using few modules which requires ubuntu os version >= 16.04.
-    - fail:
+    - name: "Checking prerequisites for ubuntu platform."
+      fail:
         msg: "Current ubuntu os version is lower than 16.00. Please install higher version to proceed."
       when: (ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu') and ansible_distribution_major_version < 16 
 
     # Ansible script is using few modules which requires redhat/centos os version >= 7.00.
-    - fail:
+    - name: "Checking prerequisites for RedHat/CentOS platform."
+      fail:
         msg: "Current ubuntu os version is lower than 16.00. Please install higher version to proceed."
       when: (ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux') and ansible_distribution_major_version < 7 
 
     # Add docker repo for ubuntu platform.
-    - name: add docker repo
+    - name: "add docker repo for ubuntu platform"
       apt_repository:
         repo="deb https://download.docker.com/linux/ubuntu xenial stable"
         state=present
       when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
 
     # Add docker repo gpg key for ubuntu platform.
-    - name: install docker-ce repo gpg key
+    - name: "install docker-ce repo gpg key for ubuntu platform"
       apt_key:
         url="https://download.docker.com/linux/ubuntu/gpg"
         state=present
       when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
 
     # check docker pkg is already installed for ubuntu platform.
-    - name: check if docker-ce is installed. 
+    - name: "check if docker-ce is installed on ubuntu platform" 
       command: dpkg-query -W docker-ce
       register: deb_check
       failed_when: deb_check.rc > 1
@@ -34,7 +36,7 @@
       when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
 
     # Install docker for ubuntu platform.
-    - name: Refresh cache and install docker-ce
+    - name: "Refresh cache and install docker-ce on ubuntu platform"
       apt:
         name=docker-ce
         update_cache=yes
@@ -42,7 +44,7 @@
       when: (ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu') and deb_check.rc != 1
 
     # Install docker for Redhat/Centos platform.
-    - name: 'Install docker'
+    - name: 'Install docker on RedHat/CentOS platform.'
       yum:
         name: docker
         state: present
@@ -56,14 +58,14 @@
         enabled: yes
 
     # Install pyton-pip
-    - name: 'Install python-pip'
+    - name: 'Install python-pip on ubuntu platform.'
       apt:
         name: python-pip
         state: present
       when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
                                                                                     
     # Install pyton-pip
-    - name: 'Install python-pip'
+    - name: 'Install python-pip on RedHat/CentOS platform.'
       yum:
         name: python-pip
         state: present
@@ -79,11 +81,17 @@
     - name: 'Add iptable rule to allow tcp traffic having port: 4500'
       shell: iptables -I INPUT -p tcp --dport 4500 -j ACCEPT
 
+    # Add iptable rule to allow tcp traffic having port: 4500 
+    - name: 'copy the docker enviornment file to the remote machine.'
+      copy: 
+        src: env.conf 
+        dest: /tmp/
+    
     # restart a container
     - name: Restart a container
       docker:
         name: AgileBot
         image: jsingh8/agilebot:latest
         state: started
-        env_file: env.conf
+        env_file: /tmp/env.conf
                           
