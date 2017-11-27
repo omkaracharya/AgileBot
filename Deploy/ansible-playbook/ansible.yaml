@@ -1,5 +1,15 @@
 - hosts: nodes
   become: yes
+  vars:
+    msg_ansible_prerequisite: |
+            You must update Ansible to at least 2.1 to use this ansible playbook.
+            HINT:- http://docs.ansible.com/ansible/latest/intro_installation.html.
+  pre_tasks:
+    - name: "asnisble minimum version required (pre-requisite check)"
+      assert:
+        that: "ansible_version.full | version_compare('2.1', '>=')"
+        msg: "{{ msg_ansible_prerequisite.split('\n') }}"
+ 
   tasks:
     # Ansible script is using few modules which requires ubuntu os version >= 16.04.
     - name: "Checking prerequisites for ubuntu platform."
