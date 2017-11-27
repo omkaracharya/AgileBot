@@ -1,4 +1,4 @@
-### Deployment Steps
+## DEPLOYMENT
 
 To run the agile bot, please follow the below mentioned steps. 
 
