@@ -51,26 +51,26 @@ b. start the vm
 7. Configure the environment variables in the environment file `ansible/env.conf`.
 
 ```
-AGILEBOT_ID=
-AGILEBOT_TOKEN=
-SLACK_TOKEN=
-RALLY_SERVER=rally1.rallydev.com
-RALLY_USERNAME=
-RALLY_PASSWORD=
-RALLY_APIKEY=
-RALLY_PROJECT=AgileBot
-CHROME_DRIVER_PATH=C:/Users/Dexter/.m2/repository/webdriver/chromedriver/win32/2.32/chromedriver.exe
-SLACK_URL=https://csc510project.slack.com/
-TESTER_EMAIL=
-TESTER_PASSWORD=
-MOCK=False
-GITHUB_TOKEN=
-FLASK_PORT=4500
-REPO_NAME=
-REPO_AUTHOR=
+  AGILEBOT_ID=
+  AGILEBOT_TOKEN=
+  SLACK_TOKEN=
+  RALLY_SERVER=rally1.rallydev.com
+  RALLY_USERNAME=
+  RALLY_PASSWORD=
+  RALLY_APIKEY=
+  RALLY_PROJECT=AgileBot
+  CHROME_DRIVER_PATH=C:/Users/Dexter/.m2/repository/webdriver/chromedriver/win32/2.32/chromedriver.exe
+  SLACK_URL=https://csc510project.slack.com/
+  TESTER_EMAIL=
+  TESTER_PASSWORD=
+  MOCK=False
+  GITHUB_TOKEN=
+  FLASK_PORT=4500
+  REPO_NAME=
+  REPO_AUTHOR=
 ```
 
-Note: We pass this environment file as input file while running docker in ansible. AgileBot reads the value of these environment variable and do certains task like authentication etc.   
+Note: While running, we pass this environment file as input file to docker in ansible-playbook. AgileBot reads the value of these environment variable and do certains task like authentication etc.   
 
 8. Run the anisble playbook 
 
