@@ -2,7 +2,7 @@
 
 ### [Sprint Board](https://trello.com/b/uNdm5Ebl/csc-510-se-project)
 
-### Credential for Instructors
+### Rally Credential for Instructors
 Username: lele.yogesh@gmail.com
 Password: G0Pack!@#
 
