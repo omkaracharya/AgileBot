@@ -1,20 +1,20 @@
 ## DEPLOYMENT
  
-#### Note: For running acceptance tests on your own deployed version, please make sure that your environment has access tokens to Rally Project, Slack Room and GitHub. Instruction on how to set them is provided further down this file.
+#### Note: For running acceptance tests on your own deployed version, make sure that your environment has access tokens to Rally Project, Slack Room and GitHub. Instruction on how to set them is provided further down this file.
  
-To run the agile bot, please follow the below mentioned steps. 
+To deploy your version of AgileBot, follow the below mentioned steps. 
 
 1. Install the vagrant to create the virtual machine. Follow [these](https://github.com/CSC-DevOps/CM/blob/master/VM.md) instructions.  
 
-    **Note:** If you already have host machine then please directly jump to step 4.  
+    **Note:** If you already have host machine directly jump to step 4.  
 
-2. Reserve a virtual machine with centOS/Ubuntu base image and login. 
-   a. initialize virtual machine
+2. Reserve a virtual machine with CentOS/Ubuntu base image and login.
+   a. Initialize virtual machine
 
    ```
    vagrant init centos/7   
    ```
-   b. start the vm
+   b. Start the vm
 
    ```
    vagrant up
@@ -26,7 +26,7 @@ To run the agile bot, please follow the below mentioned steps.
    vagrant ssh-config
     ```
 
-4. Update the inventory file.
+4. Clone this repo and update the inventory file.
 
    a. provide the correct IP address of the virtual machine. 
    
@@ -34,7 +34,7 @@ To run the agile bot, please follow the below mentioned steps.
    
    c. update the `ansible_ssh_private_key_file` path.
    
-   Hint: Copy the IdentityFile path from vagrant ssh-config path. If you are not using vagrant then please provide private key file path.  
+   ##### *Hint: Copy the IdentityFile path from vagrant ssh-config path. If you are not using vagrant then provide private key file path.*
 
 5. Install ansible. 
 
@@ -42,13 +42,13 @@ To run the agile bot, please follow the below mentioned steps.
     yum install ansible
     ```
 
-6. Test reachability of the vitrual machine using inventory file.
+6. Test reachability of the virtual machine using inventory file.
 
     ```
     ansible all -m ping -i inventory 
     ```
 
-7. Configure the environment variables in the environment file `ansible/env.conf`.
+7. Update the environment variables in the environment file `ansible/env.conf` according to you target systems.
 
       ```
       AGILEBOT_ID=
@@ -70,23 +70,23 @@ To run the agile bot, please follow the below mentioned steps.
       REPO_AUTHOR=
       ```
 
-Note: While running, we pass this environment file as input file to docker in ansible-playbook. AgileBot reads the value of these environment variable and do certains task like authentication etc.   
+    ##### *Note: While running, we pass this environment file as input file to docker in ansible-playbook. AgileBot uses these environment variables throughout its lifespan*
 
-8. Run the anisble playbook 
+8. Run the ansible playbook 
 
     ```
     ansible-playbook -i inventory ansible/ansible.yaml
     ```
 
-9. [slack side configuration] Configure the public IP address of Virtual Machine in slack for interactive messages. 
+9. [Slack side configuration] Configure the public IP address of Virtual Machine in slack for interactive messages. 
 
-   a. open this url https://api.slack.com/apps/A7N5G20GY/interactive-messages?saved=1. 
+   a. Open this url https://api.slack.com/apps/A7N5G20GY/interactive-messages. 
 
-   b. update the public IP address in the Request URL.
+   b. Update the public IP address in the Request URL.
 
       For ex: if Public IP address of VM is `152.7.99.153` then Request URL should be http://152.7.99.153:4500/slack/message_actions. 
 
-   Note: No need to change the port number.
+   ##### *Note: No need to change the port number*.
 
    c. Save the changes.
 
