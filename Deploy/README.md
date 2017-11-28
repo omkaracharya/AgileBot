@@ -59,7 +59,7 @@ b. start the vm
   RALLY_PASSWORD=
   RALLY_APIKEY=
   RALLY_PROJECT=AgileBot
-  CHROME_DRIVER_PATH=C:/Users/Dexter/.m2/repository/webdriver/chromedriver/win32/2.32/chromedriver.exe
+  CHROME_DRIVER_PATH=
   SLACK_URL=https://csc510project.slack.com/
   TESTER_EMAIL=
   TESTER_PASSWORD=
