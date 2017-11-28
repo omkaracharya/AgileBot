@@ -1,8 +1,8 @@
 ### Things to know before testing
 
-1. __Rally__: To verify the changes made, you can use Rally credentials mentioned in [WORKSHEET.md](../Bot/WORKSHEET.md) 
+1. __Rally__: To verify the changes made, you can use Rally credentials mentioned in [WORKSHEET.md](../Bot/WORKSHEET.md#rally-credential-for-instructors) 
 2. __Slack__: Invitations have been sent out to TAs for joining `milestone-deployment` slack channel that has fully functioning @AgileBot included
-3. __GitHub__: TAs have been added as collaborators to the GitHub repo interfaced with our version of AgileBot. They are free to commit any code to execute last two test cases
+3. __GitHub__: TAs have been added as collaborators to the GitHub repo `AgileBotTest` interfaced with our version of AgileBot. They are free to commit any code to execute last two test cases
 
 
 
