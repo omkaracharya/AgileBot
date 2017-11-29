@@ -94,3 +94,8 @@ To deploy your version of AgileBot, follow the below mentioned steps.
       ##### *Note: No need to change the port number*.
 
     c. Save the changes.
+
+
+## Acceptance Testing 
+   
+   Please follow this ![link](https://github.ncsu.edu/oachary/CSC-510-Project/blob/master/Deploy/TestCases.md)
