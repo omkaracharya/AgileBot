@@ -100,3 +100,7 @@ To deploy your version of AgileBot, follow the below mentioned steps.
 ## Acceptance Testing 
 
    Please follow this ![link](https://github.ncsu.edu/oachary/CSC-510-Project/blob/master/Deploy/TestCases.md)
+
+## Screen cast
+
+    [Here](https://youtu.be/3ouFn5loFAE)
