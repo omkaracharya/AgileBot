@@ -4,7 +4,7 @@ import os
 
 def set_env():
     filepath = (os.path.dirname(os.path.abspath(__file__ + "../../../../"))
-                + '/environment_variables.txt')
+                + '/env.conf')
     variables = dict(line.strip().split('=') for line in open(filepath))
     for k, v in variables.items():
         set_var(k, v)
