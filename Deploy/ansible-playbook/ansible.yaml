@@ -92,6 +92,13 @@
       shell: iptables -I INPUT -p tcp --dport 4500 -j ACCEPT
 
     # Add iptable rule to allow tcp traffic having port: 4500 
+    - name: 'Add iptable rule to forward tcp traffic to docker port: 4500'
+      shell: iptables -I FORWARD -i eth1 -p tcp --dport 4500 -d 172.17.0.2 -j ACCEPT
+
+    - name: 'Add NAT rule'
+      shell: iptables -t nat -A  DOCKER -p tcp --dport 4500 -j DNAT --to-destination 172.17.0.2:4500 
+
+    # Add iptable rule to allow tcp traffic having port: 4500 
     - name: 'copy the docker enviornment file to the remote machine.'
       copy: 
         src: env.conf 
@@ -104,4 +111,8 @@
         image: jsingh8/agilebot:latest
         state: started
         env_file: /tmp/env.conf
+
+    - debug: 
+        msg="Please update the request URl at https://api.slack.com/apps/A7N5G20GY/interactive-messages to http://{{ ansible_ssh_host }}:4500/slack/message_actions"
+
                           

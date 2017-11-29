@@ -12,5 +12,7 @@ COPY ./src /agileBot/src/
 # make the /agileBot/src as working directory
 WORKDIR /agileBot/src/
 
+EXPOSE 4500
+
 # run the bot
 CMD ["python3", "run.py"]
