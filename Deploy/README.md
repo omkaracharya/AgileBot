@@ -27,7 +27,17 @@ To deploy your version of AgileBot, follow the below mentioned steps.
    vagrant ssh-config
     ```
 
-4. Clone this repo and update the inventory file.
+4. Install ansible. 
+
+    ```
+    yum install ansible
+    ```
+    
+5. clone the git repo using `git clone https://github.ncsu.edu/oachary/CSC-510-Project` command.
+
+6. go to ansible-playbook directory using `cd CSC-510-Project/Deploy/ansible-playbook`. 
+
+7. update the inventory file.
 
    a. provide the correct IP address of the virtual machine. 
    
@@ -37,19 +47,7 @@ To deploy your version of AgileBot, follow the below mentioned steps.
    
    ##### *Hint: Copy the IdentityFile path from vagrant ssh-config path. If you are not using vagrant then provide private key file path.*
 
-5. Install ansible. 
-
-    ```
-    yum install ansible
-    ```
-
-6. Test reachability of the virtual machine using inventory file.
-
-    ```
-    ansible all -m ping -i inventory 
-    ```
-
-7. Update the environment variables in the environment file `ansible/env.conf` according to you target systems.
+8. Update the environment variables in the environment file `env.conf` according to you target systems.
 
       ```
       AGILEBOT_ID=
@@ -73,13 +71,19 @@ To deploy your version of AgileBot, follow the below mentioned steps.
 
     ##### *Note: While running, we pass this environment file as input file to docker in ansible-playbook. AgileBot uses these environment variables throughout its lifespan*
 
-8. Run the ansible playbook 
+9. Test reachability of the virtual machine using inventory file.
 
     ```
-    ansible-playbook -i inventory ansible/ansible.yaml
+    ansible all -m ping -i inventory 
     ```
 
-9. [Slack side configuration] Configure the public IP address of Virtual Machine in slack for interactive messages. 
+10. Run the ansible playbook 
+
+    ```
+    ansible-playbook -i inventory ansible.yaml
+    ```
+
+11. [Slack side configuration] Configure the public IP address of Virtual Machine in slack for interactive messages. 
 
    a. Open this url https://api.slack.com/apps/A7N5G20GY/interactive-messages. 
 
@@ -90,4 +94,3 @@ To deploy your version of AgileBot, follow the below mentioned steps.
    ##### *Note: No need to change the port number*.
 
    c. Save the changes.
-
