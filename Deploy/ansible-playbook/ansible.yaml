@@ -91,6 +91,18 @@
     - name: 'Add iptable rule to allow tcp traffic having port: 4500'
       shell: iptables -I INPUT -p tcp --dport 4500 -j ACCEPT
 
+   # validate the user input
+    - name: "Validation of user input"
+      shell: python validateEnvConf.py
+      register: cmd_res
+      ignore_errors: True
+    
+    # fail if user input is wrong
+    - name: "fail the play if the previous command (Validation of user input) did not succeed"
+      fail: 
+        msg: "Enviornment file is missing in the current directory or user input is invalid. Please check the env.conf again."
+      when: cmd_res.rc == 1
+
     # Add iptable rule to allow tcp traffic having port: 4500 
     - name: 'copy the docker enviornment file to the remote machine.'
       copy: 
