@@ -39,7 +39,7 @@ To deploy your version of AgileBot, follow the below mentioned steps.
 
 7. update the inventory file.
 
-   a. provide the correct IP address of the virtual machine. 
+   a. provide the correct IP address of the virtual machine (ansible_ssh_host). 
    
    b. update the `ansible_ssh_user` name. 
    
@@ -47,6 +47,8 @@ To deploy your version of AgileBot, follow the below mentioned steps.
    
    ##### *Hint: Copy the IdentityFile path from vagrant ssh-config path. If you are not using vagrant then provide private key file path.*
 
+   **Note**: If you want to setup the password less ssh to the VM then please follow these ![instructions](https://github.ncsu.edu/oachary/CSC-510-Project/blob/master/Deploy/ansible-playbook/setup_passwordless_ssh)
+   
 8. Update the environment variables in the environment file `env.conf` according to your target systems.
 
       ```
