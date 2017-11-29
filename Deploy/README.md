@@ -94,7 +94,7 @@ To deploy your version of AgileBot, follow the below mentioned steps.
 
       For ex: if Public IP address of VM is 152.7.99.153 then Request URL should be  http://152.7.99.153:4500/slack/message_actions. 
 
-      ##### *Note: No need to change the port number*.
+      Note: No need to change the port number.
 
     c. Save the changes.
 ```
