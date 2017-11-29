@@ -83,7 +83,7 @@ To deploy your version of AgileBot, follow the below mentioned steps.
     ansible-playbook -i inventory ansible.yaml
     ```
 
-11. [Slack side configuration] Configure the public IP address of Virtual Machine in slack for interactive messages. 
+11. **[Slack side configuration]** Configure the public IP address of Virtual Machine in slack for interactive messages. 
 
 ```
     a. Open this url https://api.slack.com/apps/A7N5G20GY/interactive-messages. 
@@ -99,4 +99,4 @@ To deploy your version of AgileBot, follow the below mentioned steps.
 
 ## Acceptance Testing 
 
-     Please follow this ![link](https://github.ncsu.edu/oachary/CSC-510-Project/blob/master/Deploy/TestCases.md)
+   Please follow this ![link](https://github.ncsu.edu/oachary/CSC-510-Project/blob/master/Deploy/TestCases.md)
