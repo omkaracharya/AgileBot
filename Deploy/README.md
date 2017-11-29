@@ -85,17 +85,18 @@ To deploy your version of AgileBot, follow the below mentioned steps.
 
 11. [Slack side configuration] Configure the public IP address of Virtual Machine in slack for interactive messages. 
 
+```
     a. Open this url https://api.slack.com/apps/A7N5G20GY/interactive-messages. 
 
     b. Update the public IP address in the Request URL.
 
-      For ex: if Public IP address of VM is `152.7.99.153` then Request URL should be http://152.7.99.153:4500/slack/message_actions. 
+      For ex: if Public IP address of VM is `152.7.99.153` then Request URL should be  http://152.7.99.153:4500/slack/message_actions. 
 
       ##### *Note: No need to change the port number*.
 
     c. Save the changes.
-
+```
 
 ## Acceptance Testing 
 
-   Please follow this ![link](https://github.ncsu.edu/oachary/CSC-510-Project/blob/master/Deploy/TestCases.md)
+     Please follow this ![link](https://github.ncsu.edu/oachary/CSC-510-Project/blob/master/Deploy/TestCases.md)
