@@ -47,7 +47,7 @@ To deploy your version of AgileBot, follow the below mentioned steps.
    
    ##### *Hint: Copy the IdentityFile path from vagrant ssh-config path. If you are not using vagrant then provide private key file path.*
 
-8. Update the environment variables in the environment file `env.conf` according to you target systems.
+8. Update the environment variables in the environment file `env.conf` according to your target systems.
 
       ```
       AGILEBOT_ID=
@@ -90,7 +90,7 @@ To deploy your version of AgileBot, follow the below mentioned steps.
 
     b. Update the public IP address in the Request URL.
 
-      For ex: if Public IP address of VM is `152.7.99.153` then Request URL should be  http://152.7.99.153:4500/slack/message_actions. 
+      For ex: if Public IP address of VM is 152.7.99.153 then Request URL should be  http://152.7.99.153:4500/slack/message_actions. 
 
       ##### *Note: No need to change the port number*.
 
