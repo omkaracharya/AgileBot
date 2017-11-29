@@ -8,7 +8,8 @@ To deploy your version of AgileBot, follow the below mentioned steps.
 
     **Note:** If you already have host machine directly jump to step 4.  
 
-2. Reserve a virtual machine with CentOS/Ubuntu base image and login.
+2. Reserve a VCL virtual machine with CentOS/Ubuntu base image and login.
+
    a. Initialize virtual machine
 
    ```
