@@ -13,4 +13,5 @@
 | Bot Milestone   | [BOT.md](/Bot/BOT.md) |
 | Service Milestone   | [SERVICE.md](/Service/SERVICE.md) |
 | Deployment Milestone | [DEPLOYMENT.md](/Deploy/README.md)
+| Report Milestone | [REPORT.md](/Report/REPORT.md)
 | Task Tracking | [WORKSHEET.md](/Bot/WORKSHEET.md) |
