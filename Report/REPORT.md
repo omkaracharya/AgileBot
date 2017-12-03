@@ -2,7 +2,7 @@
 
 ## Report
 
-#### 1. The problem your bot solved
+### 1. The problem your bot solved
 
 Agile is the most widely used methodology in software development. Standups, grooming, backlog, scrum practices form the core essence of Agile. There are various tools that help in tracking/managing these processes but not automate them.  
 
@@ -16,7 +16,7 @@ We have proposed a AgileBot as a solution to solve this problem. AgileBot is a S
 
 * User can request for his status. AgileBot will process the user's commit logs and returns his current status. 
 
-#### 2. Primary features and screenshots
+### 2. Primary features and screenshots
 
 AgileBot provides 3 major features
 1. Story Assignment
