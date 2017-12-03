@@ -2,7 +2,7 @@
 
 ## Report
 
-**1. The problem your bot solved.**
+#### 1. The problem your bot solved
 
 Agile is the most widely used methodology in software development. Standups, grooming, backlog, scrum practices form the core essence of Agile. There are various tools that help in tracking/managing these processes but not automate them.  
 
@@ -10,13 +10,13 @@ This issue is very cruical in the software development company to improve the ov
 
 We have proposed a AgileBot as a solution to solve this problem. AgileBot is a SlackBot that interfaces with Project planning tool Rally and GitHub. AgileBot solves three major use cases:  
 
-a. Auto assigns the unassigned bugs to the best engineer based on his workload.  
+* Auto assigns the unassigned bugs to the best engineer based on his workload.  
 
-b. Auto assigns the point to the user stories and assigns the user stories to the 'best' engineer after taking into consideration various heuristics.  
+* Auto assigns the point to the user stories and assigns the user stories to the 'best' engineer after taking into consideration various heuristics.  
 
-c. User can request for his status. AgileBot will process the user's commit logs and returns his current status. 
+* User can request for his status. AgileBot will process the user's commit logs and returns his current status. 
 
-**2. Primary features and screenshots..**
+#### 2. Primary features and screenshots
 
 AgileBot provides 3 major features
 1. Story Assignment
