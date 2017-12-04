@@ -24,7 +24,6 @@ AgileBot provides 3 major features
 3. Status Updating
 
 
-
 **1. Backlog Grooming:**  The scrum master will request for backlog grooming. The bot will provide possible point allocation to stories and scrum master confirms it. Bot assigns the points and posts the link.
 
 ![groombacklog](https://media.github.ncsu.edu/user/6216/files/4409ca40-d84f-11e7-880f-71d29c8adf6c)
@@ -37,9 +36,13 @@ AgileBot provides 3 major features
 
 ![givemystatus](https://media.github.ncsu.edu/user/6216/files/2719700c-d84f-11e7-840e-5f066cf90bf0)
 
-### 3. Your reflection on the development process and project.
+### 3. Reflection on the development process and project.
 
-### 4. Any limitations and future work.
+* Unlike previous projects, we found that applying software engineering principles e.g Design patterns, Agile Techniques to our work helped us quite a lot. Our design was well thought-of yet flexible enough to accommodate changes. Testing was easy due to mocking. Deployment was smooth because of CI/CD techniques.
+* Overall, the coverage of topics taught throughout of the course helped us efficiently deliver a good product in a timely fashion.
+
+
+### 4. Limitations and future work.
 
 There is always a chance of improvement in everything. Here is the list of enhancement which we can do:
 
