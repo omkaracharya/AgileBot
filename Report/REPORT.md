@@ -1,9 +1,9 @@
 ## Project Presentation
-
+[Here's](https://youtu.be/UI8WGyRbP-0) the link to our video presentation
 
 ## Report
 
-### 1. The problem your our solved
+### 1. The problem our bot solved
 
 Agile is the most widely used methodology in software development. Standups, grooming, backlog, scrum practices form the core essence of Agile. There are various tools that help in tracking/managing these processes but not automate them.  
 
