@@ -26,6 +26,7 @@ AgileBot provides 3 major features
 
 **1. Story Assignment:** The team lead will request for a sprint plan and provide a list of team members and stories. The bot will provide possible story assignments and team lead confirms it. Bot creates sprint plan and posts link.
 
+![assignstories](https://media.github.ncsu.edu/user/6216/files/5fa2ba9a-d869-11e7-9d40-9f1a92a4015f)
 
 **2. Status Updating:** The user will request for a status update and provide the standup/team id/date. The bot will provide possible status updates based on commit logs. The user updated and/or confirms it. Bot posts user's status update to standup/team channel.
 
