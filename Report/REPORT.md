@@ -47,12 +47,11 @@ There is always a chance of improvement in everything. Here is the list of enhan
   ```
   Bug Id: <XYZ>
   Reviewer: <jsingh8 -- XYZ>
-  ```
-
-Then we can find out that this commit belongs to which Bug Id or Feature Id and based on this, we can report user status by mentioning, list of bugs reolved, lines of code checked in. 
+  ```  
+  Then we can find out that this commit belongs to which Bug Id or Feature Id and based on this, we can report user status by   mentioning, list of bugs reolved, lines of code checked in. 
 
 * Similarly we can improve the story assignment task. Now AgileBoot calculate the workload of the each user based on the list of assigned task and then it will get to know the avilable quota for the user. And based on the Quota, it will assgin the task to a particular user.
 
-But logically user might be busy in meeting or reviewing code of other people. so 
-* we should look into the calender and take the meeting time as well into consideration while calculating user avilable time Quota. 
-* we should check for the list of code reviews for that person and take corresponding time into consideration while calcualting user aviable time quota before assigning the story to him.
+  But logically user might be busy in meeting or reviewing code of other people. so 
+  1. we should look into the calender and take the meeting time as well into consideration while calculating user avilable time Quota. 
+  2. we should check for the list of code reviews for that person and take corresponding time into consideration while calcualting user aviable time quota before assigning the story to him.
